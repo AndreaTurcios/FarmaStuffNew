@@ -3,9 +3,9 @@
 class Clientes extends Validator {
 
     private $id = null;
-    private $nombres = null; 
+    private $nombres = null;
     private $apellidos = null;
-    private $telefono = null;  
+    private $telefono = null;
     private $dui = null;
     private $direccion = null;
     private $correo = null;    
