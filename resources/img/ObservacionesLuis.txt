@@ -1,0 +1,33 @@
+Correcciones Luis Borja (Tiene hasta sábado a las 4:00 p.m. para entregar correcciones)
+- Global:
+	- Agregar footer
+	- Responsive
+- Login:
+	- Cambiar fondo
+	- El cuadro que abarca el correo y contraseña que sea entre gris y transparente 
+	- El navbar debe tener el mismo color que el cuadro anteriormente mencionado
+	- Ortografía
+	- Un poco más unidas las separaciones
+	- Si se puede hacer el botón redondo, realizar para tener concordancia con el wireframe
+- Registro: 
+	- Cambiarle los colores al fondo, que combinen medianamente con la paleta de la página
+	- En vez de escribir "Loguear", escribir "Iniciar sesión"
+	- El cuadro que abarca el correo y contraseña que sea entre gris y transparente 
+	- El navbar debe tener el mismo color que el cuadro anteriormente mencionado
+	- Si se puede hacer el botón redondo, realizar para tener concordancia con el wireframe
+- Recetas:
+	- Título "Comprar con receta médica"
+	- Botón centrado, y borde redondo
+	- Color de letra, no se lee el "Datos del comprador"
+	- Cambiar ícono de la cámara y que tenga color amigable con la paleta de colores
+	- Reducir espacio, hay demasiado
+- Recetas con seguro:
+	- Botón borde redondo
+	- Cambiar ícono de la cámara y que tenga color amigable con la paleta de colores
+	- Reducir espacio de las tarjetas, hay demasiado
+	- Color de fondo gris claro
+- Ofertas:
+	- Cambiar tamaño botones (que abarque toda la tarjeta)
+	- Cambiar color de fondo a gris claro
+	- Cambiar productos y precios, además agregarle un cuadro a la foto con el porcentaje de descuento
+	- Quitar el cuadro que está arriba y dice el porcentaje
