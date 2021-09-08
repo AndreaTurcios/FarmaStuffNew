@@ -9,11 +9,16 @@ Dashboard_Page::headerTemplate('Login');
 <div class="container">
   <div class="container-fluid">
             <form  method="post" id="session-form" class="sign-box enters" >
+            
+            <input id="datafecha" type="text" name="datafecha"  class="hide" />
+            <input id="databrowser" type="text" name="databrowser" class="hide" />
+            <input id="dataos" type="text" name="dataos" class="hide" />
+
                 <div class="sign-avatar">
                     <img src="../../resources/img/Originals/logoconpng.png" alt="">
                 </div>
                 <span><i class="fas fa-user-alt"></i> Inicio de sesión</span><br/>
-            <div class="form-group">
+            <div class="form-group">                
                 <input id="usuariocliente" type="text" name="usuariocliente" class="validate" required/>
             </div>
             <div class="form-group">

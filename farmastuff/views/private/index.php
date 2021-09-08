@@ -39,7 +39,6 @@ Dashboard_Page::headerTemplate('Home');
 
 <!-- Importación del archivo para generar gráficas en tiempo real. Para más información https://www.chartjs.org/ -->
     <script type="text/javascript" src="../../resources/js/chart.js"></script>
-    
 <?php
 //Se imprime la plantilla del pie y se envía el nombre del controlador para la página web
 Dashboard_Page::footerTemplate('index.js');

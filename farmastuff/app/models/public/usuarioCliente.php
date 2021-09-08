@@ -16,6 +16,10 @@ class usuarioCliente extends Validator
     private $clavecliente = null;
     private $fotocliente = null;
     private $iddepartamento = null;
+    private $usuario = null;
+    private $fecha = null;
+    private $browser = null;
+    private $os = null;
 
     public function setId($value)
     {
@@ -128,6 +132,59 @@ class usuarioCliente extends Validator
         }
     }
 
+    public function setClave($value)
+    {
+        if ($this->validateAlphanumeric($value, 1, 50)) {
+            $this->clave = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function setUsuario($value)
+    {
+        if ($this->validateAlphanumeric($value, 1, 50)) {
+            $this->usuario = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setFecha($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->fecha = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setBrowser($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->browser = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setOs($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->os = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
     public function getId()
     {
         return $this->id;
@@ -182,10 +239,40 @@ class usuarioCliente extends Validator
     {
         return $this->iddepartamento;
     }     
+
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    public function getBrowser()
+    {
+        return $this->browser;
+    }
+
+    public function getOs()
+    {
+        return $this->os;
+    }
     
     /*
     *   Métodos para gestionar la cuenta del usuario.
-    */                                                                    
+    */
+    
+    public function createRowHistorial()
+    {       
+        $sql = 'INSERT INTO HistorialSesionesPublicas (usuarioh, browserh, sisoperativo, fecharegistro)
+        VALUES (?,?,?,?)';
+        $params = array($this->usuario, $this->browser, $this->os , $this->fecha);
+        return Database::executeRow($sql, $params);
+    }
+
+
     public function checkUser($usuariocliente)
     {
         $sql = 'SELECT idcliente, correocliente FROM cliente WHERE usuariocliente = ?';

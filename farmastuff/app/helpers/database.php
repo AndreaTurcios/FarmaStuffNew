@@ -18,7 +18,7 @@ class Database
         $server = 'localhost';
         $database = 'dbfarmaceutica';   
         $username = 'postgres';
-        $password = 'admin';
+        $password = 'jkl555';
    
         // Se crea la conexión mediante la extensión PDO y el controlador para PostgreSQL.
         self::$connection = new PDO('pgsql:host='.$server.';dbname='.$database.';port=5432', $username, $password);
@@ -131,30 +131,30 @@ class Database
     */
     private static function setException($code, $message)
     {
-         // Se asigna el mensaje del error original por si se utiliza.
-         self::$error = utf8_encode($message);
+        // Se asigna el mensaje del error original por si se necesita.
+        self::$error = utf8_encode($message);
         // Se compara el código del error para establecer un error personalizado.
         switch ($code) {
             case '7':
-                self::$error = 'Existe un problema al conectar con el servidor';
+                self::$error = $message('Existe un problema al conectar con el servidor');
                 break;
             case '42703':
-                self::$error = 'Nombre de campo desconocido';
+                self::$error = $message('Nombre de campo desconocido');
                 break;
             case '23505':
-                self::$error = 'Dato duplicado, no se puede guardar';
+                self::$error = $message('Dato duplicado, no se puede guardar');
                 break;
             case '42P01':
-                self::$error = 'Nombre de tabla desconocido';
+                self::$error = $message('Nombre de tabla desconocido');
                 break;
             case '23503':
-                self::$error = 'Registro ocupado, no se puede eliminar';
+                self::$error = $message('Registro ocupado, no se puede eliminar');
                 break;
             default:
-                //self::$error = 'Ocurrió un problema en la base de datos';
-                
+                self::$error = $message('Ocurrió un problema en la base de datos');     
         }
     }
+
 
     /*
     *   Método para obtener un error personalizado cuando ocurre una excepción.

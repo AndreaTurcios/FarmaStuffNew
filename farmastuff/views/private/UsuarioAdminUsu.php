@@ -107,10 +107,9 @@ Dashboard_Page::headerTemplate('Usuarios');
         </div>
         
         <div class="input-field col s12 m6">
-                <select  id="tipoempleado" name="tipoempleado">
-            
+                <select  id="tipoempleado" name="tipoempleado">            
                 </select>
-            <label>Tipo empleado</label>
+                <label>Tipo empleado</label>
         </div>
                 </div>
             </div>

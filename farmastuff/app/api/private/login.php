@@ -24,8 +24,32 @@ if (isset($_GET['action'])) {
                     $result['exception'] = 'Ocurrió un problema al cerrar la sesión';
                 }
             break;
+            case 'historial':
+                $_POST = $usuario->validateForm($_POST);
+                if ($usuario->setUsuario($_POST['usuario'])) {
+                    if ($usuario->setBrowser($_POST['databrowser'])) {
+                        if ($usuario->setOs($_POST['dataos'])) {
+                            if ($usuario->setFecha($_POST['datafecha'])) {
+                                if ($usuario->createRowHistorial()) {
+                                    $result['status'] = 1;                                    
+                                } else {
+                                    $result['exception'] = Database::getException();                                                        
+                                }                                         
+                         } else {
+                          $result['exception'] = 'Fecha no reconocida';
+                         }     
+                       } else {
+                        $result['exception'] = 'Sistema Operativo no recopilado';
+                      }        
+                    } else {
+                      $result['exception'] = 'Buscador no recopilado';
+                    }  
+                } else {
+                    $result['exception'] = 'usuario desconocido';
+                }       
+            break;               
             default:
-                $result['exception'] = 'Acción no disponible dentro de la sesión';
+            $result['exception'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
@@ -67,7 +91,7 @@ if (isset($_GET['action'])) {
                                 $result['exception'] = 'Alias incorrecto';
                             }                                            
                         }
-                    break;
+                    break;                                    
                     default:
                          $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }

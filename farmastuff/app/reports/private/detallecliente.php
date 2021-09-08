@@ -38,7 +38,7 @@ if (isset($_GET['id'])) {
                 $pdf->Cell(55, 10, utf8_decode('Encargado del Envío'), 1, 0, 'C', 1);
                 $pdf->Cell(24, 10, utf8_decode('Fecha Envío'), 1, 0, 'C', 1);
                 $pdf->Cell(24, 10, utf8_decode('Fecha Recibo'), 1, 0, 'C', 1);
-                $pdf->Cell(36, 10, utf8_decode('Subtotal (USD$)'), 1, 1, 'C', 1);                
+                $pdf->Cell(36, 10, utf8_decode('Subtotal (US$)'), 1, 1, 'C', 1);                
                 // Se establece la fuente para los datos de los productos.
                 $pdf->SetFont('Times', '', 11);
                 // Se recorren los registros ($dataProductos) fila por fila ($rowProducto).

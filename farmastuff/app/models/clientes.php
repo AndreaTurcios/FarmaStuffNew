@@ -78,7 +78,7 @@ class Clientes extends Validator {
     //         $this->nacimiento = $value;
     //         return true;
     //     } else {
-    //         return false;
+    //         return false ;
     //     }
     // }
 
@@ -181,9 +181,7 @@ class Clientes extends Validator {
     }
 
     public function createRow()
-    {
-        // Se encripta la clave por medio del algoritmo bcrypt que genera un string de 60 caracteres.
-        // $hash = password_hash($this->clave, PASSWORD_DEFAULT);
+    {       
         $sql = 'INSERT INTO cliente (nombrecliente,apellidocliente,telefonocliente,duicliente,direccioncliente,correocliente,idestadocliente)
         VALUES (? ,?, ?, ?, ?, ?, ?)';
         $params = array($this->nombres, $this->apellidos, $this->telefono,$this->dui, $this->direccion, $this->correo,$this->estado);

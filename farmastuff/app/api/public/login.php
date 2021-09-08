@@ -14,8 +14,7 @@ if (isset($_GET['action'])) {
     // Se verifica si existe una sesión iniciada como cliente para realizar las acciones correspondientes.
     if (isset($_SESSION['idcliente'])) {
         // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
-        switch ($_GET['action']) {
-            
+        switch ($_GET['action']) {            
             case 'logOut':
                 if (session_destroy()) {
                     $result['status'] = 1;
@@ -24,6 +23,33 @@ if (isset($_GET['action'])) {
                     $result['exception'] = 'Ocurrió un problema al cerrar la sesión';
                 }
                 break;
+                case 'historial':
+                    $_POST = $usuarioCliente->validateForm($_POST);
+                    if ($usuarioCliente->setUsuario($_POST['usuariocliente'])) {
+                        if ($usuarioCliente->setBrowser($_POST['databrowser'])) {
+                            if ($usuarioCliente->setOs($_POST['dataos'])) {
+                                if ($usuarioCliente->setFecha($_POST['datafecha'])) {
+                                    if ($usuarioCliente->createRowHistorial()) {
+                                        $result['status'] = 1; 
+                                        $result['message'] = 'Exito';                                    
+                                    } else {
+                                        $result['exception'] = Database::getException();                                                        
+                                    }                                         
+                             } else {
+                              $result['exception'] = 'Fecha no reconocida';
+                             }     
+                           } else {
+                            $result['exception'] = 'Sistema Operativo no recopilado';
+                          }        
+                        } else {
+                          $result['exception'] = 'Buscador no recopilado';
+                        }  
+                    } else {
+                        $result['exception'] = 'usuario desconocido';
+                    }       
+                break;
+                default:
+                    $result['exception'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
@@ -51,7 +77,9 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'Alias incorrecto';
                     }                                            
                 }
-                break;
+                break;                
+                default:
+                    $result['exception'] = 'Acción no disponible fuera de la sesión'; 
              
         }
     }

@@ -12,5 +12,5 @@ document.getElementById('save-form').addEventListener('submit', function (event)
         action = 'create';
     }
     
-    saveRow4(API_REGISTER, 'create', 'save-form');
+    saveRow49(API_REGISTER, 'create', 'save-form');
 });

@@ -52,7 +52,7 @@ Dashboard_Page::headerTemplate('Clientes');
                 <h4 id="modal-title" class="center-align"></h4>                
                 <form method="post" id="show-form">                   
                     <input class="hide" type="number" id="id_clienteO" name="id_clienteO"/>  
-                    <input id="nombres_clientesO" type="text" name="nombres_clientesO"  class="hide" />                        
+                    <input id="nombres_clientesO" type="text" name="nombres_clientesO"  class="hide" />
                     <div class="row">
                         <table class="responsive-table highlight">                           
                             <thead>

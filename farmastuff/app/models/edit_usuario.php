@@ -155,7 +155,7 @@ class edit extends Validator
         From valoraciones 
         Inner join productos USING(idproducto)
         Inner join productoproveedor USING(idproducto)
-        Group by nombreproducto
+        Group by nombreproducto        
         limit 10';
         $params = null;
         return Database::getRows($sql, $params);

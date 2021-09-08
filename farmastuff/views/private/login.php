@@ -9,6 +9,10 @@ Dashboard_Page::headerTemplate('Login');
     <div class="row">
         <!-- Formulario para iniciar sesión -->
         <form method="post" id="session-form">
+            <input id="datafecha" type="text" name="datafecha"  class="hide" />
+            <input id="databrowser" type="text" name="databrowser" class="hide" />
+            <input id="dataos" type="text" name="dataos" class="hide" />
+
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">person_pin</i>
                 <input id="usuario" type="text" name="usuario" class="validate" required/>

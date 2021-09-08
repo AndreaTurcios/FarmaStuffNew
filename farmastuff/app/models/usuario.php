@@ -15,6 +15,9 @@ class usuario extends Validator
     private $usuario = null;
     private $clave = null;
     private $idtipoempleado = null;
+    private $fecha = null;
+    private $browser = null;
+    private $os = null;
 
     public function setId($value)
     {
@@ -116,6 +119,36 @@ class usuario extends Validator
         }
     }
 
+    public function setFecha($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->fecha = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setBrowser($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->browser = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setOs($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->os = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function getId()
     {
         return $this->id;
@@ -165,9 +198,34 @@ class usuario extends Validator
     {
         return $this->idtipoempleado;
     }                 
+
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    public function getBrowser()
+    {
+        return $this->browser;
+    }
+
+    public function getOs()
+    {
+        return $this->os;
+    }
     /*
     *   Métodos para gestionar la cuenta del usuario.
-    */                                                                    
+    */    
+    
+    
+    public function createRowHistorial()
+    {       
+        $sql = 'INSERT INTO HistorialSesionesPrivadas (usuarioh, browserh, sisoperativo, fecharegistro)
+        VALUES (?,?,?,?)';
+        $params = array($this->usuario, $this->browser, $this->os , $this->fecha);
+        return Database::executeRow($sql, $params);
+    }
+
     public function checkUser($usuario)
     {
         $sql = 'SELECT idempleado, correoempleado, idtipoempleado FROM empleado WHERE usuario = ?';

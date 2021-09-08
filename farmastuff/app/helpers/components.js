@@ -233,6 +233,30 @@ function saveRow25(api, action, form) {
     });
 }
 
+
+function saveRowhistorial(api, action, form) {
+    fetch(api + action, {
+        method: 'post',
+        body: new FormData(document.getElementById(form))
+    }).then(function (request) {
+        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+        if (request.ok) {
+            request.json().then(function (response) {
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                if (response.status) {
+                    console.log(request.status + ' ' + request.statusText);                                      
+                } else {
+                    console.log(request.status + ' ' + request.statusText);
+                }
+            });
+        } else {
+            console.log(request.status + ' ' + request.statusText);
+        }
+    }).catch(function (error) {
+        console.log(error);     
+    });
+}
+
 function saveRow34(api, action, form, modal) {
     fetch(api + action, {
         method: 'post',
@@ -330,6 +354,31 @@ function saveRow4(api, action, form, modal) {
                     // Se cierra la caja de dialogo (modal) del formulario.
                     let instance = M.Modal.getInstance(document.getElementById(modal));
                     instance.close();
+                    // Se cargan nuevamente las filas en la tabla de la vista después de agregar o modificar un registro.                    
+                    sweetAlert(1, response.message, null);
+                } else {
+                    sweetAlert(2, response.exception, null);
+                }
+            });
+        } else {
+            console.log(request.status + ' ' + request.statusText);
+        }
+    }).catch(function (error) {
+        console.log(error);     
+    });
+}
+
+function saveRow49(api, action, form, modal) {
+    fetch(api + action, {
+        method: 'post',
+        body: new FormData(document.getElementById(form))
+    }).then(function (request) {
+        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+        if (request.ok) {
+            request.json().then(function (response) {
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                if (response.status) {
+                    // Se cierra la caja de dialogo (modal) del formulario.                    
                     // Se cargan nuevamente las filas en la tabla de la vista después de agregar o modificar un registro.                    
                     sweetAlert(1, response.message, null);
                 } else {
