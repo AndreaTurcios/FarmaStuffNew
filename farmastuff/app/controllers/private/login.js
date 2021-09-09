@@ -35,10 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
 // Método manejador de eventos que se ejecuta cuando se envía el formulario de iniciar sesión.
 document.getElementById('session-form').addEventListener('submit', function (event) {
     // Se evita recargar la página web después de enviar el formulario.
+    event.preventDefault();   
+
     document.getElementById('databrowser').value = date.value
     document.getElementById('datafecha').value = browser.value
-    document.getElementById('dataos').value = os.value
-    event.preventDefault();   
+    document.getElementById('dataos').value = os.value    
+    
     fetch(API_LOGIN + 'logIn', {           
         method: 'post',
         body: new FormData(document.getElementById('session-form'))

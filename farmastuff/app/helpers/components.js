@@ -244,9 +244,11 @@ function saveRowhistorial(api, action, form) {
             request.json().then(function (response) {
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {
-                    console.log(request.status + ' ' + request.statusText);                                      
+                    console.log(request.status + ' ' + request.statusText);
+                    //sweetAlert(1, response.message, null);
                 } else {
                     console.log(request.status + ' ' + request.statusText);
+                    //sweetAlert(2, response.message, null);
                 }
             });
         } else {

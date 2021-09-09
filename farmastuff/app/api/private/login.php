@@ -47,7 +47,33 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['exception'] = 'usuario desconocido';
                 }       
-            break;               
+            break;
+            case 'logIn':
+                $_POST = $usuario->validateForm($_POST);
+                if ($usuario->checkUser($_POST['usuario'])) {
+                    if ($usuario->checkPassword($_POST['clave'])) {
+                        $result['status'] = 1;
+                        $result['message'] = 'Autenticación correcta';
+                        $_SESSION['idempleado'] = $usuario->getId();
+                        $_SESSION['usuario'] = $usuario->getUsuario();
+                        $_SESSION['correo'] = $usuario->getCorreoEmpleado();
+                        $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
+                    } else {
+                        if (Database::getException()) {
+                            $result['exception'] = Database::getException();
+                        } else {
+                            $result['exception'] = 'Clave incorrecta';
+                        }
+                    }
+                } else {
+                    if (Database::getException()) {
+                        $result['exception'] = Database::getException();
+                        $result['exception'] = 'error e';
+                    } else {
+                        $result['exception'] = 'Alias incorrecto';
+                    }                                            
+                }
+            break;                
             default:
             $result['exception'] = 'Acción no disponible dentro de la sesión';
         }
