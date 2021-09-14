@@ -61,14 +61,15 @@ class Dashboard_Page {
                     </li>                    
                     <li>
                         <li><a href="empleadoMantenimiento.php"><i class="material-icons left">sentiment_very_satisfied</i>Valoraciones</a></li>                                           
-                    </li>                         
-                    <li>
+                    </li>                     
+                        <li><a href="homePrivate.php"><i class="material-icons left">check</i>Revisar</a></li>
+                        <li><a href="usuario.php"><i class="material-icons left">desktop_mac</i>Mantenimiento</a></li>
+                        <li><a href="usuarioVentas.php"><i class="material-icons left">assignment</i>Órdenes</a></li>
+                        <li>
                         <div class="divider"></div>
-                    </li>              
-                        <li><a href="login.php"><i class="material-icons left">highlight_off</i>Cerrar sesión</a></li>      
-                        <li class="hide-on-large-only" ><a href="homePrivate.php"><i class="material-icons left">check</i>Revisar</a></li>
-                        <li class="hide-on-large-only"><a href="usuario.php"><i class="material-icons left">desktop_mac</i>Mantenimiento</a></li>
-                        <li class="hide-on-large-only"><a href="usuarioVentas.php"><i class="material-icons left">assignment</i>Órdenes</a></li>
+                        </li> 
+                        <li><a href="cambio.php"><i class="material-icons left">key</i>Cambiar contraseña</a></li>
+                        <li><a href="#" onclick="logOut()"><i class="material-icons left">highlight_off</i>Cerrar sesión</a></li>  
                 </ul> 
 
 
