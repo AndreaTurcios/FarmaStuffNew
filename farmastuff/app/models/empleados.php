@@ -298,6 +298,15 @@ class Empleados extends Validator{
         return Database::executeRow($sql, $params);
     }
 
+    public function updatePassword()
+    { $hash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $sql = 'UPDATE empleado 
+        SET clave=?
+        WHERE idempleado = ?';
+        $params = array($hash,$this->id);
+        return Database::executeRow($sql, $params);
+    }
+
     public function deleteRow()
     {
         $sql = 'DELETE FROM empleado

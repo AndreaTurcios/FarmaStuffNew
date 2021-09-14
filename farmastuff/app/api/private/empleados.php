@@ -96,6 +96,36 @@ if (isset($_GET['action'])) {
                 }
                     
                     break;
+                    case 'updatePassword':
+                        $_POST = $empleados->validateForm($_POST);
+                        if($empleados->setId($_POST['idempleado'])){
+                            if ($empleados->readOne()) {
+                                if ($_POST['clave_cliente'] == $_POST['confirmar_clave']) {
+                                    if ($empleados->setClave($_POST['clave'])) {
+                                        if ($empleados->setIDTipoEmpleado($_POST['tipoempleado'])) {   
+                                            if ($empleados->updatePassword()) {
+                                                $result['status'] = 1;
+                                                $result['message'] = 'Contraseña modificada correctamente';
+                                            } else {
+                                                $result['exception'] = Database::getException();
+                                            }  
+                                        }else {
+                                            $result['exception'] ='tipo incorrecto';
+                                        }
+                                    }else {
+                                        $result['exception'] ='Seleccione un tipo empleado';
+                                    }
+                                } else {
+                                    $result['exception'] = $empleados->getPasswordError();
+                                    $result['exception'] = 'Claves diferentes';
+                                }
+                            } else {
+                                $result['exception'] = 'Claves diferentes';
+                            }
+                        }else {
+                            $result['exception'] ='usuario incorrecto';
+                        }
+                        break;
                 case 'readOne':
                 if ($empleados->setId($_POST['idempleado'])) {
                     if ($result['dataset'] = $empleados->readOne()) {

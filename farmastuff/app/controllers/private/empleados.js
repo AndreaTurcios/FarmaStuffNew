@@ -72,7 +72,6 @@ function openUpdateDialog(id) {
     // Se define un objeto con los datos del registro seleccionado.
     const data = new FormData();
     data.append('idempleado', id);
-
     fetch(API_EMPLEADOS + 'readOne', {
         method: 'post',
         body: data
@@ -103,7 +102,6 @@ function openUpdateDialog(id) {
         console.log(error);
     });
 }
-
 // Método manejador de eventos que se ejecuta cuando se envía el formulario de guardar.
 document.getElementById('save-form').addEventListener('submit', function (event) {
     // Se evita recargar la página web después de enviar el formulario.
