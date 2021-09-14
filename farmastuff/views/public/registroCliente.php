@@ -8,6 +8,8 @@ Dashboard_Page::headerTemplate('Registro');
     <div class="row">
         <div class="card col s12 m8">
         <form method="post" id="save-form">
+        <div class="g-recaptcha" data-sitekey="6LfpUGccAAAAAFHZ7KrEokJ9dUDy5bR_q_LFY7MU"></div>
+        <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response"/>
         <hr>Registro cliente</hr>
                     <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                     <input class="hide" type="number" id="id_cliente" name="id_cliente"/>
@@ -52,10 +54,7 @@ Dashboard_Page::headerTemplate('Registro');
                     <i class="material-icons prefix">security</i>
                     <input id="clave" type="password" name="clave" class="validate" required/>
                     <label for="clave">Clave</label>
-                </div>
-            
-               
-                                                 
+                </div>                           
                     </div>
                     <div class="row center-align">
                         <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Guardar"><i class="material-icons">save</i></button>
@@ -64,6 +63,7 @@ Dashboard_Page::headerTemplate('Registro');
        </div>
     </div>
 </div>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?render=6LeBqFccAAAAAKKKyrQri1N3nktSRu1YR8TC2iNs"></script>
 <?php
 //Se incluye la plantilla del footer para la página web
 Dashboard_Page::footerTemplate('clienteRegistro.js');
