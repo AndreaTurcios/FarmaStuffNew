@@ -223,7 +223,7 @@ class Empleados extends Validator{
 
     public function autenticacion()
     {
-        $sql = 'update empleado set codigo = ? where idempleado = ?';
+        $sql = 'UPDATE empleado set codigo = ? where idempleado = ?';
         $params = array($this->codigo, $this->id);
         return Database::getRows($sql, $params);
     }

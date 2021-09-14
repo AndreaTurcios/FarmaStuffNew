@@ -1,13 +1,10 @@
 <?php
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
 require_once('../../../libraries/phpmailer/src/Exception.php');
 require_once('../../../libraries/phpmailer/src/PHPMailer.php');
 require_once('../../../libraries/phpmailer/src/SMTP.php'); 
 require_once('../../../libraries/phpmailer52/class.smtp.php'); 
-
 $permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 function generate_string($input, $strength = 16) {
     $input_length = strlen($input);
@@ -20,6 +17,8 @@ function generate_string($input, $strength = 16) {
 }
 
 $codigo = generate_string($permitted_chars, 5);
+$codigoos=$codigo;
+$_POST = $codigoos;
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 try {
