@@ -16,17 +16,11 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
         switch ($_GET['action']) {
             case 'logOut':
-                unset($_SESSION['idempleado']);
-                $result['status'] = 1;
-                $result['message'] = 'Se ha cerrado la sesión por inactividad';          
-            break;
-            case 'sessionTime':
-                if((time() - $_SESSION['tiempo_usuario']) < 10){
-                    $_SESSION['tiempo_usuario'] = time();
-                } else{
-                   unset($_SESSION['idempleado'], $_SESSION['usuario'], $_SESSION['tiempo_usuario']);
+                if (session_destroy()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Se ha cerrado la sesión por inactividad'; 
+                    $result['message'] = 'Sesión eliminada correctamente';
+                } else {
+                    $result['exception'] = 'Ocurrió un problema al cerrar la sesión';
                 }
             break;
             case 'historial':
@@ -63,7 +57,7 @@ if (isset($_GET['action'])) {
                         $_SESSION['usuario'] = $usuario->getUsuario();
                         $_SESSION['correo'] = $usuario->getCorreoEmpleado();
                         $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
-                        $_SESSION['tiempo_usuario'] = time();
+                        
                     } else {
                         if (Database::getException()) {
                             $result['exception'] = Database::getException();
