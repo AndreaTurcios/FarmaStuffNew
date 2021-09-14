@@ -233,7 +233,51 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['exception'] = 'Proveedor incorrecto';
                 }
-                break;               
+                break;     
+                
+            case 'register':
+                $_POST = $empleados->validateForm($_POST);
+                if ($empleados->setNombreEmpleado($_POST['nombreempleado'])) {
+                    if ($empleados->setApellidoEmpleado($_POST['apellidoempleado'])) {
+                        if ($empleados->setTelefonoEmpleado($_POST['telefonoempleado'])) {
+                            if ($empleados->setDireccionEmpleado($_POST['direccionempleado'])) {
+                                if ($empleados->setCorreoEmpleado($_POST['correoempleado'])) {
+                                    $empleados->setEstadoEmpleado(1);
+                                    if ($empleados->setUsuario($_POST['usuario'])) {
+                                        if ($_POST['clave'] == $_POST['confclave']) {
+                                            if ($empleados->setClave($_POST['clave'])) {
+                                                $empleados->setIDTipoEmpleado(1);
+                                                if ($empleados->createRow()) {
+                                                    $result['status'] = 1;
+                                                    $result['message'] = 'Empleado registrado correctamente';
+                                                } else {
+                                                    $result['exception'] = Database::getException();
+                                                }
+                                            } else {
+                                                $result['exception'] = $empleados->getPasswordError();
+                                            }
+                                        } else {
+                                            $result['exception'] = 'Claves diferentes';
+                                        }
+                                    } else {
+                                        $result['exception'] = 'Usuario incorrecto';
+                                    }
+                                } else {
+                                    $result['exception'] = 'Correo incorrecto';
+                                }
+                            } else {
+                                $result['exception'] = 'Dirección incorrecta';
+                            }
+                        } else {
+                            $result['exception'] = 'Teléfono incorrecto';
+                        }
+                    } else {
+                        $result['exception'] = 'Apellidos incorrectos';
+                    }
+                } else {
+                    $result['exception'] = 'Nombres incorrectos';
+                }
+                break;
         }
         // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
         header('content-type: application/json; charset=utf-8');
