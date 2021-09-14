@@ -14,17 +14,17 @@ Dashboard_Page::headerTemplate('Cambio contraseña');
             <input id="dataos" type="text" name="dataos" class="hide" />
 
             <div class="input-field col s12 m6 offset-m3">
-                <input id="idempleado" type="text" name="idempleado" class="validate" required/>
+                <input id="idempleado" type="number" name="idempleado" class="validate" autocomplete="off" required/>
             </div>
-            <div class="input-field col s12 m6 offset-m3">
-                <i class="material-icons prefix">key</i>
-                <input id="contra" type="text" name="contra" class="validate" required/>
-                <label for="contra">Contraseña</label>
+            <div class="input-field col s12 m6">
+                <i class="material-icons prefix">security</i>
+                <input type="password" id="clave_cliente" name="clave_cliente" class="validate" required/>
+                <label for="clave_cliente">Clave</label>
             </div>
-            <div class="input-field col s12 m6 offset-m3">
-                <i class="material-icons prefix">key</i>
-                <input id="contra2" type="text" name="contra2" class="validate" required/>
-                <label for="contra2">Confirmar contraseña</label>
+            <div class="input-field col s12 m6">
+                <i class="material-icons prefix">security</i>
+                <input type="password" id="confirmar_clave" name="confirmar_clave" class="validate" required/>
+                <label for="confirmar_clave">Confirmar clave</label>
             </div>
             </div>
             <div class="col s12 center-align">
