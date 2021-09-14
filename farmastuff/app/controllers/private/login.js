@@ -50,10 +50,10 @@ document.getElementById('session-form').addEventListener('submit', function (eve
             request.json().then(function (response) {
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {  
-                    sweetAlert(1, response.message, 'index.php');                  
+                    sweetAlert(1, response.message, 'confirmacion.php');                  
                     action = 'historial';
                     saveRowhistorial(API_LOGIN, action ,'session-form');
-                   
+
                 } else {
                     sweetAlert(2, response.exception, 'login.php');  
                 }

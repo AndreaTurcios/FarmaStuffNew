@@ -540,6 +540,11 @@ function sweetAlert(type, text, url) {
         case 4:
             title = 'Aviso';
             icon = 'info';
+            break;
+        case 6:
+            title = 'Aviso correo';
+            icon = '../../resources/img/mail-black-envelope-symbol_icon-icons.com_56519.png'; 
+            break;
     }
     // Si existe una ruta definida, se muestra el mensaje y se direcciona a dicha ubicación, de lo contrario solo se muestra el mensaje.
     if (url) {

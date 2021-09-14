@@ -8,6 +8,7 @@ if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
     // Se instancia la clase correspondiente.
+    
     $usuario = new usuario;                  
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'error' => 0, 'message' => null, 'exception' => null);
@@ -15,7 +16,6 @@ if (isset($_GET['action'])) {
     if (isset($_SESSION['idempleado'])) {
         // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
         switch ($_GET['action']) {
-            
             case 'logOut':
                 if (session_destroy()) {
                     $result['status'] = 1;
@@ -58,6 +58,7 @@ if (isset($_GET['action'])) {
                         $_SESSION['usuario'] = $usuario->getUsuario();
                         $_SESSION['correo'] = $usuario->getCorreoEmpleado();
                         $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
+                        
                     } else {
                         if (Database::getException()) {
                             $result['exception'] = Database::getException();
@@ -102,6 +103,7 @@ if (isset($_GET['action'])) {
                                 $_SESSION['usuario'] = $usuario->getUsuario();
                                 $_SESSION['correo'] = $usuario->getCorreoEmpleado();
                                 $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
+                                $_SESSION['tiempo_usuario'] = time();
                             } else {
                                 if (Database::getException()) {
                                     $result['exception'] = Database::getException();
@@ -117,15 +119,48 @@ if (isset($_GET['action'])) {
                                 $result['exception'] = 'Alias incorrecto';
                             }                                            
                         }
-                    break;                                    
+                    break; 
+                    case 'sessionTime':
+                        if((time() - $_SESSION['tiempo_usuario']) < 10){
+                            $_SESSION['tiempo_usuario'] = time();
+                        } else{
+                           unset($_SESSION['idempleado'], $_SESSION['usuario'], $_SESSION['tiempo_usuario']);
+                            $result['status'] = 1;
+                            $result['message'] = 'Se ha cerrado la sesión por inactividad'; 
+                        }
+                    break;   
+                    case 'autenticacion':
+                        if ($empleados->setId($_POST['idempleado'])) {
+                            if ($data = $empleados->readOne()) {
+                                if ($empleados->setCodigo($_POST['codigo'])) {
+                                    if ($empleados->autenticacion()) {
+                                        $result['status'] = 1;
+                                        $result['message'] = 'Empleado confirmado correctamente'; 
+                                    } else {
+                                    $result['exception'] = Database::getException();
+                                }
+                            } else {
+                                $result['exception'] = 'Empleado inexistente';
+                            }
+                        } else {
+                            $result['exception'] = 'Empleado inexistente';
+                        }
+                        } else {
+                            $result['exception'] = 'Empleado incorrecto';
+                        }
+                        break;                                   
                     default:
                          $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }
+        
+require_once('../../helpers/emailtest.php');
+$emailtest = new emailtest;
     }
     // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
     header('content-type: application/json; charset=utf-8');
     // Se imprime el resultado en formato JSON y se retorna al controlador.
     print(json_encode($result));
+    
 } else {
     
 }

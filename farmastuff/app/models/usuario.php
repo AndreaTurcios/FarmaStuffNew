@@ -241,6 +241,21 @@ class usuario extends Validator
         }
     }
 
+    public function verificacion($usuario)
+    {
+        $sql = 'SELECT correoempleado WHERE usuario = ?';
+        $params = array($usuario);
+        if ($data = Database::getRow($sql, $params)) {
+            $this->id = $data['idempleado'];
+            $this->correoempleado = $data['correoempleado'];
+            $this->idtipoempleado  = $data['idtipoempleado'];
+            $this->usuario = $usuario;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function checkPassword($clave)
     {
         $sql = 'SELECT clave FROM empleado WHERE idempleado = ?';

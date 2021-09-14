@@ -25,6 +25,8 @@ Dashboard_Page::headerTemplate('Login');
             </div>
             <div class="col s12 center-align">
                 <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Ingresar"><i class="material-icons">send</i></button>
+                <br>
+                <a href="cambioContra.php">He olvidado mi contraseña</a>
             </div>
         </form>  
     </div>

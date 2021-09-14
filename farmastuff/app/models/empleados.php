@@ -1,7 +1,6 @@
 <?php
-
 class Empleados extends Validator{
-    
+
     private $id = null;
     private $nombreempleado = null;
     private $apellidoempleado = null;
@@ -12,11 +11,63 @@ class Empleados extends Validator{
     private $usuario = null;
     private $clave = null;
     private $idtipoempleado = null;
+    private $codigo = null;
+
+    /*
+    public function generarCodigoRecu($longitudCodigo){
+        //creamos la variable codigo
+        $codigo = "";
+        //caracteres a ser utilizados
+        $caracteres="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $max=strlen($caracteres)-1;
+        for($i=0;$i < $longitudCodigo;$i++)
+        {
+            $codigo.=$caracteres[rand(0,$max)];
+        }
+        return $codigo;
+    }
+
+    public function enviarCorreo($correo, $codigo){
+        $mail = new PHPMailer(true);
+        try {
+            // Configuracion SMTP
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      
+            $mail->isSMTP();                                              
+            $mail->Host  = 'smtp.gmail.com';                     
+            $mail->SMTPAuth  = true;                                       
+            $mail->Username  = 'farmastuffsv@gmail.com';                 
+            $mail->Password  = 'jdcsiulxrqwyyqod';	// Contraseña SMTP
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port  = 587;
+            $mail->setFrom("farmastuffsv@gmail.com", "FarmaStuff"); 
+            $mail->addAddress($correo);  
+            $mail->isHTML(true);
+            $mail->Subject = 'Código para confirmar usuario';
+            $mail->Body = 'Estimado cliente, ' .$correo .'gracias por preferirnos. 
+                        Por este medio le enviamos el codígo de verificación para continuar con el proceso de verificación de usuario
+                        El cual es:<b>'.$codigo.'!</b>';
+            $mail->send();
+        } catch (Exception $e) {
+            $this->$correoError = "El mensaje no se ha enviado. Mailer Error: {$mail->ErrorInfo}";
+            return false;
+        }
+    }
+    */
 
     public function setId($value)
     {
         if ($this->validateNaturalNumber($value)) {
             $this->id = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setCodigo($value)
+    {
+        if ($this->validateAlphanumeric($value, 1, 50)) {
+            $this->codigo = $value;
             return true;
         } else {
             return false;
@@ -113,6 +164,8 @@ class Empleados extends Validator{
         }
     }
 
+    
+
     public function getId()
     {
         return $this->id;
@@ -161,6 +214,18 @@ class Empleados extends Validator{
     public function getIDTipoEmpleado()
     {
         return $this->idtipoempleado;
+    }
+
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+    public function autenticacion()
+    {
+        $sql = 'update empleado set codigo = ? where idempleado = ?';
+        $params = array($this->codigo, $this->id);
+        return Database::getRows($sql, $params);
     }
 
     public function searchRows($value)
@@ -240,4 +305,5 @@ class Empleados extends Validator{
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
+    
 }
