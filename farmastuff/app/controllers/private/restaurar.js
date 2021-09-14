@@ -6,7 +6,6 @@ const EMPLEADOS = '../../helpers/emailtest.php';
 document.addEventListener('DOMContentLoaded', function () {
     sweetAlert(4, 'Código de confirmación enviado correctamente, revise su correo para verificar su usuario', null);
     })
-
     function confirmacion(codigoos) {
         // Se restauran los elementos del formulario.
         document.getElementById('confirmacion-form').reset();

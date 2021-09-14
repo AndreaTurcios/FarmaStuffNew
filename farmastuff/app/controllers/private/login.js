@@ -66,6 +66,33 @@ document.getElementById('session-form').addEventListener('submit', function (eve
     });
 });
 
+function sessionTime() 
+{
+        fetch(API_LOGIN + 'sessionTime', {
+            method: 'get'
+        }).then(function (request) {
+            // Se verifica si la petición que se está realizando es afirmativa y en dado caso ejecuta la acción
+            if (request.ok) {
+                request.json().then(function (response) {
+                    if (response.status) {
+                        sweetAlert(4, response.message, 'login.php');
+                    } else {
+                        console.log('Sesión activa')
+                    }
+                });
+            } else {
+                console.log(request.status + ' ' + request.statusText);
+            }
+        }).catch(function (error) {
+            console.log(error);
+        });
+}
+
+//Métodos manejadores de eventos que se ejecutan cuando se realiza una acción
+document.addEventListener('click', sessionTime);
+
+document.addEventListener('DOMContentLoaded', sessionTime);
+
 function logOut() {
     swal({
         title: 'Advertencia',
