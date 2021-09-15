@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', function () {
             request.json().then(function (response) {
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje.
                 if (response.status) {
+
+                    //Se colocan esto para deshabilitar los campos, para que cuando se muestre la alerta y se quieran
+                    //vulnerar no se pueda ya que está deshabilitado para editar.
+                    
                     sweetAlert(3, response.message, 'login.php');
                     inputDireccion.disabled = true;
                     inputCorreo.disabled = true;
@@ -33,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     inputNombre.disabled = true;
                     inputClave.disabled = true;
                     inputConfClave.disabled = true;
-                    
+
                 } else {
                     // Se verifica si ocurrió un problema en la base de datos, de lo contrario se continua normalmente.
                     if (response.error) {
