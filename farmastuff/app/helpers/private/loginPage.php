@@ -48,23 +48,32 @@ $user_agent = $_SERVER['HTTP_USER_AGENT'];
         return 'Otras';
      }
 
-
-
+$permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function generate_string($input, $strength = 16) {
+    $input_length = strlen($input);
+    $random_string = '';
+    for($i = 0; $i < $strength; $i++) {
+        $random_character = $input[mt_rand(0, $input_length - 1)];
+        $random_string .= $random_character;
+    }
+    return $random_string;
+}
 $date =  date("d") . "-" . date("m") . "-" . date("Y");
 $SO = getPlatform($user_agent);
 $navegador = getBrowser($user_agent);
+$codigo = generate_string($permitted_chars, 5);
 
 print('
         <input id="browser" type="text" name="browser" class="hide"  value="'.$navegador.'"  />
         <input id="date" type="text" name="date" class="hide" value="'.$date.'" />
         <input id="os" type="text" name="os" class="hide" value="'.$SO.'" />
+        <input id="codigos" type="text" name="codigos" class="" value="'.$_SESSION['codigoo'].'" />
 ');
 
 //Clase para definir las plantillas de las páginas web del sitio privado
 class Dashboard_Page {    
     //Método para imprimir el encabezado y establecer el titulo del documento
     public static function headerTemplate($title) {
-        session_start();
         print('
             <!DOCTYPE html>
             <html lang="es">
@@ -163,3 +172,4 @@ class Dashboard_Page {
     }
 }
 ?>
+

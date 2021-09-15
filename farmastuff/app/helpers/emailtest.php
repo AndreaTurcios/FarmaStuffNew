@@ -3,28 +3,17 @@ include('private/loginPage.php');
 //Se imprime la plantilla del encabezado y se envía el titulo para la página web
 Dashboard_Page::headerTemplate('Login');
 
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require_once('../../../libraries/phpmailer/src/Exception.php');
-require_once('../../../libraries/phpmailer/src/PHPMailer.php');
-require_once('../../../libraries/phpmailer/src/SMTP.php'); 
-require_once('../../../libraries/phpmailer52/class.smtp.php'); 
-$permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-function generate_string($input, $strength = 16) {
-    $input_length = strlen($input);
-    $random_string = '';
-    for($i = 0; $i < $strength; $i++) {
-        $random_character = $input[mt_rand(0, $input_length - 1)];
-        $random_string .= $random_character;
-    }
-    return $random_string;
-}
-
-$codigo = generate_string($permitted_chars, 5);
-$codigoos = $_POST['codigo'];
+require_once('../../libraries/phpmailer/src/Exception.php');
+require_once('../../libraries/phpmailer/src/PHPMailer.php');
+require_once('../../libraries/phpmailer/src/SMTP.php'); 
+require_once('../../libraries/phpmailer52/class.smtp.php'); 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 try {
+    session_start();
     //Server settings
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->SMTPDebug  = 0;
@@ -37,10 +26,10 @@ try {
     $mail->Port       = 587;                                 
     $mail->setFrom('farmastuffsv@gmail.com');
     $mail->addAddress($_SESSION['correo']); 
-    $mail->isHTML(true);              
-    $mail->Subject = 'FarmaStuff codigo de confirmacion '.$codigo;
+    $mail->isHTML(true);         
+    $mail->Subject = 'FarmaStuff codigo de confirmacion '.$_SESSION['codigoo']
     $mail->Body    = 'Hola, le saludamos de FarmaStuff, le enviamos este correo para corroborar su usuario. 
-    Su código de seguridad es: <h2>'.$codigo.'</h2>'.' 
+    Su código de seguridad es: <h2>'.$_SESSION['codigoo'].'</h2>'.' 
     --
     <br><p>
     𝕔 FarmaStuff - 2021, El Salvador';

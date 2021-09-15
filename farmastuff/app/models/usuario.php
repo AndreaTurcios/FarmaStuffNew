@@ -18,11 +18,23 @@ class usuario extends Validator
     private $fecha = null;
     private $browser = null;
     private $os = null;
+    private $codigoo = null;
 
     public function setId($value)
     {
         if ($this->validateNaturalNumber($value)) {
             $this->id = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function setCodigo($value)
+    {
+        if ($this->validateAlphanumeric($value, 1, 50)) {
+            $this->codigoo = $value;
             return true;
         } else {
             return false;
@@ -172,6 +184,11 @@ class usuario extends Validator
     public function getDireccionEmpleado()
     {
         return $this->direccionempleado;
+    }
+
+    public function getCodigoo()
+    {
+        return $this->codigoo;
     }
 
     public function getCorreoEmpleado()

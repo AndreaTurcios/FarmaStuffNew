@@ -2,7 +2,17 @@
 require_once('../../helpers/database.php');
 require_once('../../helpers/validator.php');
 require_once('../../models/usuario.php');
-
+$permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function generate_string($input, $strength = 16) {
+    $input_length = strlen($input);
+    $random_string = '';
+    for($i = 0; $i < $strength; $i++) {
+        $random_character = $input[mt_rand(0, $input_length - 1)];
+        $random_string .= $random_character;
+    }
+    return $random_string;
+}
+$codigo = generate_string($permitted_chars, 5);
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
@@ -57,7 +67,7 @@ if (isset($_GET['action'])) {
                         $_SESSION['usuario'] = $usuario->getUsuario();
                         $_SESSION['correo'] = $usuario->getCorreoEmpleado();
                         $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
-                        
+                        $_SESSION['codigoo'] = $codigo;
                     } else {
                         if (Database::getException()) {
                             $result['exception'] = Database::getException();
@@ -128,6 +138,7 @@ if (isset($_GET['action'])) {
                                 $_SESSION['correo'] = $usuario->getCorreoEmpleado();
                                 $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
                                 $_SESSION['tiempo_usuario'] = time();
+                                $_SESSION['codigoo'] = $codigo;
                             } else {
                                 if (Database::getException()) {
                                     $result['exception'] = Database::getException();
@@ -148,12 +159,12 @@ if (isset($_GET['action'])) {
                          $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }
         ?>
-        <?php
-require_once('../../helpers/emailtest.php');
+<?php
+    require_once('../../helpers/emailtest.php');
     $emailtest = new emailtest;
-    if (isset($_POST['codigoos'])) {                                
-        $result['message'] = 'Correo enviado correctamente'; 
-    }
+        if (isset($_SESSION['codigoo'])) {                                
+            $result['message'] = 'Correo enviado correctamente'; 
+        }
 ?>
 <?php
     }
