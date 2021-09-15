@@ -2,8 +2,8 @@
 # | Custom error messages/pages                                        |
 # ----------------------------------------------------------------------
 
-ErrorDocument 403 /farmastuff/resources/error/403.html
-ErrorDocument 404 /farmastuff/resources/error/404.html
+ErrorDocument 403 /FarmaStuffNew/farmastuff/resources/error/403.html
+ErrorDocument 404 /FarmaStuffNew/farmastuff/resources/error/404.html
 
 # ----------------------------------------------------------------------
 # | Error prevention                                                   |

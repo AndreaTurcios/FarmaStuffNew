@@ -3,7 +3,7 @@ include('../../app/helpers/public/plantillaHeaderLogin.php');
 //Se imprime la plantilla del encabezado y se envía el titulo para la página web
 Dashboard_Page::headerTemplate('Registro');
 ?>  
-<script src="https://www.google.com/recaptcha/api.js"></script>
+ <script src="https://www.google.com/recaptcha/api.js"></script>
 <link href="../../resources/css/login.css" type="text/css" rel="stylesheet" media="screen,projection" />
 <div class="container">
     <div class="row">
@@ -12,7 +12,6 @@ Dashboard_Page::headerTemplate('Registro');
         <hr>Registro cliente</hr>
                     <!-- Campo oculto para asignar el id del registro al momento de modificar -->
                     <input class="hide" type="number" id="id_cliente" name="id_cliente"/>
-                    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response"/>
                     <div class="row">
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">person</i>
@@ -64,7 +63,6 @@ Dashboard_Page::headerTemplate('Registro');
     </div>
 </div>
 <script src="https://www.google.com/recaptcha/api.js?render=6LfpUGccAAAAAFHZ7KrEokJ9dUDy5bR_q_LFY7MU"></script>
-
 <?php
 //Se incluye la plantilla del footer para la página web
 Dashboard_Page::footerTemplate('clienteRegistro.js');

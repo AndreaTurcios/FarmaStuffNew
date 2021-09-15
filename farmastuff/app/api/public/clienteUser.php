@@ -25,12 +25,13 @@ if (isset($_GET['action'])) {
                 if ($token) {
                     $secretKey = '6LfpUGccAAAAAAt8U61xs-EfVti5QwVzCmLL6HTc';
                     $ip = $_SERVER['REMOTE_ADDR'];
-                    
+
                     $data = array(
                         'secret' => $secretKey,
                         'response' => $token,
                         'remoteip' => $ip
                     );
+
                     $options = array(
                         'http' => array(
                             'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -42,6 +43,7 @@ if (isset($_GET['action'])) {
                             'verify_peer_name' => false
                         )
                     );
+
                     $url = 'https://www.google.com/recaptcha/api/siteverify';
                     $context  = stream_context_create($options);
                     $response = file_get_contents($url, false, $context);
@@ -86,14 +88,11 @@ if (isset($_GET['action'])) {
                         }else {
                             $result['exception'] ='Apellido incorrecto';
                         }
-                    } else {
-                        $result['recaptcha'] = 1;
-                        $result['exception'] = 'No eres un humano';
+                    }else {
+                        $result['exception'] ='Apellido incorrecto';
                     }
-                } else {
-                    $result['exception'] = 'Ocurrió un problema al cargar el reCAPTCHA';
                 }
-                break;
+            break;
             default:
             $result['exception'] = 'Acción no disponible dentro de la sesión';
     }
@@ -105,3 +104,4 @@ if (isset($_GET['action'])) {
     } else {
         print(json_encode('Recurso no disponible'));
     }
+    

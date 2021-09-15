@@ -16,12 +16,9 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
         switch ($_GET['action']) {            
             case 'logOut':
-                if (session_destroy()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Sesión cerrada correctamente';
-                } else {
-                    $result['exception'] = 'Ocurrió un problema al cerrar la sesión';
-                }
+                unset( $_SESSION['idcliente']);
+               $result['status'] = 1;
+               $result['message'] = 'Sesión eliminada correctamente';
                 break;
                 case 'historial':
                     $_POST = $usuarioCliente->validateForm($_POST);

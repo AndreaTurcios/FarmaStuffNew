@@ -3,17 +3,18 @@ include('private/loginPage.php');
 //Se imprime la plantilla del encabezado y se envía el titulo para la página web
 Dashboard_Page::headerTemplate('Login');
 
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require_once('../../libraries/phpmailer/src/Exception.php');
-require_once('../../libraries/phpmailer/src/PHPMailer.php');
-require_once('../../libraries/phpmailer/src/SMTP.php'); 
-require_once('../../libraries/phpmailer52/class.smtp.php'); 
+
+require_once('../../../libraries/phpmailer/src/Exception.php');
+require_once('../../../libraries/phpmailer/src/PHPMailer.php');
+require_once('../../../libraries/phpmailer/src/SMTP.php'); 
+require_once('../../../libraries/phpmailer52/class.smtp.php'); 
+
+$codigoos = $_POST['codigovalidar'];
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 try {
-    session_start();
     //Server settings
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->SMTPDebug  = 0;
@@ -26,10 +27,10 @@ try {
     $mail->Port       = 587;                                 
     $mail->setFrom('farmastuffsv@gmail.com');
     $mail->addAddress($_SESSION['correo']); 
-    $mail->isHTML(true);         
-    $mail->Subject = 'FarmaStuff codigo de confirmacion '.$_SESSION['codigoo']
+    $mail->isHTML(true);              
+    $mail->Subject = 'FarmaStuff codigo de confirmacion '.$codigoos;
     $mail->Body    = 'Hola, le saludamos de FarmaStuff, le enviamos este correo para corroborar su usuario. 
-    Su código de seguridad es: <h2>'.$_SESSION['codigoo'].'</h2>'.' 
+    Su código de seguridad es: <h2>'.$codigoos.'</h2>'.' 
     --
     <br><p>
     𝕔 FarmaStuff - 2021, El Salvador';

@@ -11,6 +11,7 @@ class usuario extends Validator
     private $telefonoempleado = null;
     private $direccionempleado = null;
     private $correoempleado = null;
+    private $correo = null;
     private $estadoempleado = null;
     private $usuario = null;
     private $clave = null;
@@ -18,23 +19,13 @@ class usuario extends Validator
     private $fecha = null;
     private $browser = null;
     private $os = null;
-    private $codigoo = null;
+    private $codigoos = null;
+    private $codigo = null;
 
     public function setId($value)
     {
         if ($this->validateNaturalNumber($value)) {
             $this->id = $value;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    public function setCodigo($value)
-    {
-        if ($this->validateAlphanumeric($value, 1, 50)) {
-            $this->codigoo = $value;
             return true;
         } else {
             return false;
@@ -55,6 +46,17 @@ class usuario extends Validator
     {
         if ($this->validateAlphanumeric($value, 1, 50)) {
             $this->apellidoempleado = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function setCorreo($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->correo = $value;
             return true;
         } else {
             return false;
@@ -113,7 +115,7 @@ class usuario extends Validator
     
     public function setClave($value)
     {
-        if ($this->validateAlphanumeric($value, 1, 50)) {
+        if ($this->validatePassword($value, 1, 50)) {
             $this->clave = $value;
             return true;
         } else {
@@ -161,6 +163,29 @@ class usuario extends Validator
         }
     }
 
+
+
+    public function setCodigoo($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->codigoos = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function setCodigo($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->codigo = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function getId()
     {
         return $this->id;
@@ -184,11 +209,6 @@ class usuario extends Validator
     public function getDireccionEmpleado()
     {
         return $this->direccionempleado;
-    }
-
-    public function getCodigoo()
-    {
-        return $this->codigoo;
     }
 
     public function getCorreoEmpleado()
@@ -230,6 +250,23 @@ class usuario extends Validator
     {
         return $this->os;
     }
+
+    public function getCodigoo()
+    {
+        return $this->codigoos;
+    }
+
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+
+    public function getCorreo()
+    {
+        return $this->correo;
+    }
+
     /*
     *   Métodos para gestionar la cuenta del usuario.
     */    
@@ -319,5 +356,69 @@ class usuario extends Validator
                 ORDER BY idempleado';
         $params = null;
         return Database::getRows($sql, $params);
+    } 
+
+
+    public function searchRows($value)
+    {
+        $sql = "SELECT idempleado, nombreempleado, apellidoempleado, correoempleado ,usuario                            
+                FROM empleado                 
+                WHERE correoempleado ILIKE ? ";
+        $params = array("%$value%");
+        return Database::getRow($sql, $params);
     }
+
+    public function saveCodigo()
+    {       
+        $sql = 'INSERT into codigorecuperacion (codigo, correodestinatario) values (? , ?)';
+        $params = array($this->codigo, $this->correo);
+        return Database::executeRow($sql, $params);
+    }
+
+    public function verificarCodigo()
+    {
+        $sql = "SELECT correodestinatario , codigo
+                from codigorecuperacion 
+                Where codigo = ?
+                and codigo=(Select codigo from codigorecuperacion Where idrecuperacion=(Select max(idrecuperacion) from codigorecuperacion )) ";
+        $params = array($this->codigo);
+        return Database::getRow($sql, $params);
+    }
+
+    public function verificarUsuario()
+    {
+        $sql = "SELECT usuario from empleado Where clave != ?";
+        $params = array($this->clave);
+        return Database::getRow($sql, $params);
+    }
+
+    public function verificarClaves()
+    {
+        $sql = "SELECT clave from empleado Where clave != ?";
+        $params = array($this->clave);
+        return Database::getRow($sql, $params);
+    }    
+
+    public function updateCodigo()
+    {   
+        $hash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $sql = 'UPDATE empleado Set clave = ? Where correoempleado = (Select correodestinatario from codigorecuperacion Where idrecuperacion = (Select max(idrecuperacion) From codigorecuperacion ))';
+        $params = array($hash);
+        return Database::executeRow($sql, $params);
+    }
+
+    public function GuardarCodigoValidacion()
+    {       
+        $sql = 'INSERT Into VerificarSesiones (codigo, idusuario) values ( ? , ? )';
+        $params = array($this->codigoos, $this->id);
+        return Database::executeRow($sql, $params);
+    }
+
+    public function readCodigoSesiones()
+    {
+        $sql = 'SELECT codigo From VerificarSesiones Where codigo = ?  And idvalidar = (Select Max(idvalidar) From VerificarSesiones )';
+        $params = array($this->codigoos);
+        return Database::getRow($sql, $params);
+    } 
+
 }

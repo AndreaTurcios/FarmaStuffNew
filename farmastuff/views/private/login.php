@@ -12,6 +12,7 @@ Dashboard_Page::headerTemplate('Login');
             <input id="datafecha" type="text" name="datafecha"  class="hide" />
             <input id="databrowser" type="text" name="databrowser" class="hide" />
             <input id="dataos" type="text" name="dataos" class="hide" />
+            <input id="codigovalidar" type="text" name="codigovalidar" class="" />
 
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">person_pin</i>
@@ -26,7 +27,7 @@ Dashboard_Page::headerTemplate('Login');
             <div class="col s12 center-align">
                 <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Ingresar"><i class="material-icons">send</i></button>
                 <br>
-                <a href="cambioContra.php">He olvidado mi contraseña</a>
+                <a href="restaurarcontraseña.php" >Restaurar Contraseña</a>
             </div>
         </form>  
     </div>

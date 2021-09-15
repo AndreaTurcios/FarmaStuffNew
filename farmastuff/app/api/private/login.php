@@ -2,17 +2,7 @@
 require_once('../../helpers/database.php');
 require_once('../../helpers/validator.php');
 require_once('../../models/usuario.php');
-$permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-function generate_string($input, $strength = 16) {
-    $input_length = strlen($input);
-    $random_string = '';
-    for($i = 0; $i < $strength; $i++) {
-        $random_character = $input[mt_rand(0, $input_length - 1)];
-        $random_string .= $random_character;
-    }
-    return $random_string;
-}
-$codigo = generate_string($permitted_chars, 5);
+
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
@@ -26,13 +16,10 @@ if (isset($_GET['action'])) {
         // Se compara la acción a realizar cuando un cliente ha iniciado sesión.
         switch ($_GET['action']) {
             case 'logOut':
-                if (session_destroy()) {
-                    $result['status'] = 1;
-                    $result['message'] = 'Sesión eliminada correctamente';
-                } else {
-                    $result['exception'] = 'Ocurrió un problema al cerrar la sesión';
-                }
-            break;
+                unset( $_SESSION['idempleado']);
+                $result['status'] = 1;
+                $result['message'] = 'Sesión eliminada correctamente';               
+             break;
             case 'historial':
                 $_POST = $usuario->validateForm($_POST);
                 if ($usuario->setUsuario($_POST['usuario'])) {
@@ -57,6 +44,22 @@ if (isset($_GET['action'])) {
                     $result['exception'] = 'usuario desconocido';
                 }       
             break;
+            case 'GuardarCodigoValidacion':
+                $_POST = $usuario->validateForm($_POST);
+                    if ($usuario->setCodigoo($_POST['codigovalidar'])) {
+                        if ($usuario->setId( $_SESSION['idempleado'])) {                            
+                        if ($usuario->GuardarCodigoValidacion()) {
+                            $result['status'] = 1;                                    
+                        } else {
+                            $result['exception'] = Database::getException();                                                        
+                        }
+                    } else {
+                        $result['exception'] = 'Ingrese un valor para validar identidad';
+                    }    
+                } else {
+                    $result['exception'] = 'Ingrese un valor para enviar codigo';
+                }    
+            break;
             case 'logIn':
                 $_POST = $usuario->validateForm($_POST);
                 if ($usuario->checkUser($_POST['usuario'])) {
@@ -67,7 +70,7 @@ if (isset($_GET['action'])) {
                         $_SESSION['usuario'] = $usuario->getUsuario();
                         $_SESSION['correo'] = $usuario->getCorreoEmpleado();
                         $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
-                        $_SESSION['codigoo'] = $codigo;
+                        
                     } else {
                         if (Database::getException()) {
                             $result['exception'] = Database::getException();
@@ -101,7 +104,19 @@ if (isset($_GET['action'])) {
                 } else {
                     $result['exception'] = 'Ingrese un valor para buscar';
                 }
-            break;                
+            break;
+            case 'readCodigoSesiones':
+                $_POST = $usuario->validateForm($_POST);
+                if ($usuario->setCodigoo($_POST['codigoos'])) {                                                         
+                    if ($usuario->readCodigoSesiones()) {
+                        $result['status'] = 1;                                    
+                    } else {
+                        $result['exception'] = Database::getException();                                                        
+                    }
+                } else {
+                    $result['exception'] = 'Ingrese un valor para enviar dato';
+                }
+            break;                  
             default:
             $result['exception'] = 'Acción no disponible dentro de la sesión';
         }
@@ -138,7 +153,6 @@ if (isset($_GET['action'])) {
                                 $_SESSION['correo'] = $usuario->getCorreoEmpleado();
                                 $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
                                 $_SESSION['tiempo_usuario'] = time();
-                                $_SESSION['codigoo'] = $codigo;
                             } else {
                                 if (Database::getException()) {
                                     $result['exception'] = Database::getException();
@@ -154,19 +168,141 @@ if (isset($_GET['action'])) {
                                 $result['exception'] = 'Alias incorrecto';
                             }                                            
                         }
+                    break;
+                    case 'historial':
+                        $_POST = $usuario->validateForm($_POST);
+                        if ($usuario->setUsuario($_POST['usuario'])) {
+                            if ($usuario->setBrowser($_POST['databrowser'])) {
+                                if ($usuario->setOs($_POST['dataos'])) {
+                                    if ($usuario->setFecha($_POST['datafecha'])) {
+                                        if ($usuario->createRowHistorial()) {
+                                            $result['status'] = 1;                                    
+                                        } else {
+                                            $result['exception'] = Database::getException();                                                        
+                                        }                                         
+                                 } else {
+                                  $result['exception'] = 'Fecha no reconocida';
+                                 }     
+                               } else {
+                                $result['exception'] = 'Sistema Operativo no recopilado';
+                              }        
+                            } else {
+                              $result['exception'] = 'Buscador no recopilado';
+                            }  
+                        } else {
+                            $result['exception'] = 'usuario desconocido';
+                        }       
+                    break;
+                    case 'GuardarCodigoValidacion':
+                        $_POST = $usuario->validateForm($_POST);
+                            if ($usuario->setCodigoo($_POST['datavalidarc'])) {
+                                if ($usuario->setId( $_SESSION['idempleado'])) {                            
+                                if ($usuario->GuardarCodigoValidacion()) {
+                                    $result['status'] = 1;                                    
+                                } else {
+                                    $result['exception'] = Database::getException();                                                        
+                                }
+                            } else {
+                                $result['exception'] = 'Ingrese un valor para validar identidad';
+                            }    
+                        } else {
+                            $result['exception'] = 'Ingrese un valor para enviar codigo';
+                        }    
+                    break;
+                    case 'readOneMails':                        
+                        $_POST = $usuario->validateForm($_POST);
+                        if ($_POST['correo_empleados'] != '') {
+                            if ($result['dataset'] = $usuario->searchRows($_POST['correo_empleados'])) {
+                                $result['status'] = 1;
+                                $rows = count($result['dataset']);
+                                    $result['message'] = 'Correo Encontrado en el registro';
+                            } else {
+                                if (Database::getException()) {
+                                    $result['exception'] = Database::getException();
+                                } else {
+                                    $result['exception'] = 'No hay coincidencias';
+                                }
+                            }
+                        } else {
+                            $result['exception'] = 'Ingrese un valor para buscar';
+                        }
+                    break;
+                    case 'codigoVerificacion':
+                        $_POST = $usuario->validateForm($_POST);
+                            if ($usuario->setCodigo($_POST['codigosenviar'])) {
+                                if ($usuario->setCorreo($_POST['correo'])) {                            
+                                if ($usuario->saveCodigo()) {
+                                    $result['status'] = 1;                                    
+                                } else {
+                                    $result['exception'] = Database::getException();                                                        
+                                }
+                            } else {
+                                $result['exception'] = 'Ingrese un valor para enviar correo';
+                            }    
+                        } else {
+                            $result['exception'] = 'Ingrese un valor para enviar codigo';
+                        }    
+                    break;
+                    case 'validarUsuario':
+                        $_POST = $usuario->validateForm($_POST);
+                            if ($usuario->setCodigo($_POST['codigosenviar'])) {                                                         
+                                if ($usuario->verificarUsuario()) {
+                                    $result['status'] = 1;                                    
+                                } else {
+                                    $result['exception'] = Database::getException();                                                        
+                                }
+                            } else {
+                                $result['exception'] = 'Ingrese un valor para enviar dato';
+                            }
+                    break;
+                    case 'validarClave':
+                        $_POST = $usuario->validateForm($_POST);
+                            if ($usuario->setCodigo($_POST['codigosenviar'])) {                                                         
+                                if ($usuario->verificarClaves()) {
+                                    $result['status'] = 1;                                    
+                                } else {
+                                    $result['exception'] = Database::getException();                                                        
+                                }
+                            } else {
+                                $result['exception'] = 'Ingrese un valor para enviar dato';
+                            }
+                    break;
+                    case 'verificarCodigo':
+                        if ($usuario->setCodigo($_POST['codigos'])) {
+                            if ($result['dataset'] = $usuario->verificarCodigo()) {
+                                $result['status'] = 1;
+                                $result['message'] = 'Codigo Correcto';
+                            } else {
+                                if (Database::getException()) {
+                                    $result['exception'] = Database::getException();
+                                } else {
+                                    $result['exception'] = 'Codigo incorrecto';
+                                }
+                            }
+                        } else {
+                            $result['exception'] = 'Codigo Inexistente';
+                        }
                     break; 
+                    case 'restaurarClave':
+                        $_POST = $usuario->validateForm($_POST);
+                                if ($_POST['clave'] == $_POST['confirmacion']) {
+                                    if ($usuario->setClave($_POST['clave'])) {                                
+                                    if ($usuario->updateCodigo()) {
+                                        $result['status'] = 1;
+                                        $result['message'] = 'Clare restaurada correctamente';
+                                    } else {
+                                        $result['exception'] = Database::getException();
+                                    }                                     
+                        } else {
+                            $result['exception'] = $usuario->getPasswordError();                            
+                        }
+                    } else {
+                        $result['exception'] = 'Claves distintas';
+                    }     
+                    break;                      
                     default:
                          $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }
-        ?>
-<?php
-    require_once('../../helpers/emailtest.php');
-    $emailtest = new emailtest;
-        if (isset($_SESSION['codigoo'])) {                                
-            $result['message'] = 'Correo enviado correctamente'; 
-        }
-?>
-<?php
     }
     // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
     header('content-type: application/json; charset=utf-8');

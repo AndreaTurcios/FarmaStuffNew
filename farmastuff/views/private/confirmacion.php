@@ -19,8 +19,7 @@ Dashboard_Page::headerTemplate('Confirmación');
                 <form id="confirmacion-form" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="c" class="form-label">Código de Verificación</label>
-                    <input type="text" class="form-control " placeholder="" aria-label="codigo" aria-describedby="basic-addon1" id="codigoos" type="text" name="codigoos" class="validate" required>
-                    <input type="text" maxlength="5" class="form-control" id="c" name="codigoos2">
+                    <input type="text" class="form-control " placeholder="" aria-label="codigo" aria-describedby="basic-addon1" id="codigoos" type="text" name="codigoos" class="validate" required>                    
                 </div>
                 <button type="submit" class="btn btn-primary">Verificar</button>
             </form>
@@ -32,5 +31,5 @@ Dashboard_Page::headerTemplate('Confirmación');
     <br><br>
 <?php
 //Se imprime la plantilla del pie y se envía el nombre del controlador para la página web
-Dashboard_Page::footerTemplate('login.js');
+Dashboard_Page::footerTemplate('restaurar.js');
 ?>                              

@@ -185,7 +185,7 @@ if (isset($_GET['action'])) {
 
                                                                 } else {
                                                                     $result['exception'] = $empleados->getPasswordError();
-                                                                    $result['exception'] = 'Claves diferentes';
+                                                                    //$result['exception'] = 'Claves diferentes';
                                                                 }
                                                             } else {
                                                                 $result['exception'] = 'Claves diferentes';

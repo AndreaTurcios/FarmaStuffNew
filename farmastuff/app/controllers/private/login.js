@@ -1,9 +1,11 @@
 // Constante para establecer la ruta y parámetros de comunicación con la API.
 const API_LOGIN = '../../app/api/private/login.php?action=';
+const API_CORREO = '../../app/api/private/validarcorreo.php';
 
 // Método manejador de eventos que se ejecuta cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', function () {
     // Se inicializa el componente Tooltip asignado al botón del formulario para que funcione la sugerencia textual.
+    document.getElementById("codigovalidar").value = validarc.value;
     M.Tooltip.init(document.querySelectorAll('.tooltipped'));
 
     // Petición para verificar si existen usuarios.
@@ -32,14 +34,48 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+function confirmacion(codigo) {
+    // Se restauran los elementos del formulario.
+    document.getElementById('session-form').reset();
+    const data = new FormData();    
+    data.append('codigovalidar', codigo );
+fetch(API_CORREO, {     
+    method: 'post',
+    body: data
+}).then(function (request) {
+    // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+    if (request.ok) {
+        request.json().then(function (response) {
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción
+            if (response.status) {
+                document.getElementById("datavalidarc").value = validarc.value;
+                sweetAlert(1, response.message, null);
+            } else {
+                // En caso contrario nos envia este mensaje
+                sweetAlert(2, response.exception, null);
+            }
+        });
+    } else {
+        console.log(request.status + ' ' + request.statusText);
+    }
+}).catch(function (error) {
+    console.log(error);
+});
+
+}
+
+
+
 // Método manejador de eventos que se ejecuta cuando se envía el formulario de iniciar sesión.
 document.getElementById('session-form').addEventListener('submit', function (event) {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();   
 
-    document.getElementById('databrowser').value = date.value
-    document.getElementById('datafecha').value = browser.value
-    document.getElementById('dataos').value = os.value    
+    document.getElementById('databrowser').value = date.value;
+    document.getElementById('datafecha').value = browser.value;
+    document.getElementById('dataos').value = os.value;        
+    document.getElementById("codigovalidar").value = validarc.value; 
+    var codigo = document.getElementById("codigovalidar").value = validarc.value; 
     
     fetch(API_LOGIN + 'logIn', {           
         method: 'post',
@@ -49,11 +85,14 @@ document.getElementById('session-form').addEventListener('submit', function (eve
         if (request.ok) {
             request.json().then(function (response) {
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-                if (response.status) {  
-                    sweetAlert(1, response.message, 'confirmacion.php');                  
+                if (response.status) {
+                    confirmacion(codigo); 
+                    document.getElementById("codigovalidar").value = validarc.value;
+                    action = 'GuardarCodigoValidacion';
+                    saveRowValidador(API_LOGIN, action ,'session-form');
                     action = 'historial';
-                    saveRowhistorial(API_LOGIN, action ,'session-form');
-
+                    saveRowhistorial(API_LOGIN, action ,'session-form');                     
+                    sweetAlert(1, response.message, 'confirmacion.php');                    
                 } else {
                     sweetAlert(2, response.exception, 'login.php');  
                 }
