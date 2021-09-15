@@ -11,6 +11,8 @@ if (isset($_GET['action'])) {
             case 'readAll':
                 if ($result['dataset'] = $empleados->readAll()) {
                     $result['status'] = 1;
+                    $result['exception'] = 'Existe ya un empleado registrado';
+
                 } else {
                     if (Database::getException()) {
                         $result['exception'] = Database::getException();
