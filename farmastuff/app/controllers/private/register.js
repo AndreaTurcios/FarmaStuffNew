@@ -38,6 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Se verifica si ocurrió un problema en la base de datos, de lo contrario se continua normalmente.
                     if (response.error) {
                         sweetAlert(2, response.exception, null);
+
+                        //Se colocan esto para deshabilitar los campos, para que cuando se muestre la alerta y se quieran
+                        //vulnerar no se pueda ya que está deshabilitado para editar.
                         inputDireccion.disabled = true;
                         inputCorreo.disabled = true;
                         inputTelefono.disabled = true;
