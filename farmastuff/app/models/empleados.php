@@ -1,6 +1,5 @@
 <?php
 class Empleados extends Validator{
-
     private $id = null;
     private $nombreempleado = null;
     private $apellidoempleado = null;
@@ -314,5 +313,4 @@ class Empleados extends Validator{
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
-    
 }

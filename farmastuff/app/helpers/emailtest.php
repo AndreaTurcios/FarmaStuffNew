@@ -1,4 +1,8 @@
 <?php
+include('private/loginPage.php');
+//Se imprime la plantilla del encabezado y se envía el titulo para la página web
+Dashboard_Page::headerTemplate('Login');
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require_once('../../../libraries/phpmailer/src/Exception.php');
@@ -17,14 +21,13 @@ function generate_string($input, $strength = 16) {
 }
 
 $codigo = generate_string($permitted_chars, 5);
-$codigoos=$codigo;
-$_POST = $codigoos;
+$codigoos = $_POST['codigo'];
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 try {
     //Server settings
     //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-    $mail->SMTPDebug  = 2;
+    $mail->SMTPDebug  = 0;
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = 'smtp.gmail.com';                //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication

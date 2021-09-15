@@ -73,6 +73,24 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'Alias incorrecto';
                     }                                            
                 }
+            break;  
+            case 'readOneCodigo':                        
+                $_POST = $usuario->validateForm($_POST);
+                if ($_POST['codigoos'] != '') {
+                    if ($result['dataset'] = $usuario->searchRows($_POST['codigoos'])) {
+                        $result['status'] = 1;
+                        $rows = count($result['dataset']);
+                            $result['message'] = 'Código encontrado en el registro';
+                    } else {
+                        if (Database::getException()) {
+                            $result['exception'] = Database::getException();
+                        } else {
+                            $result['exception'] = 'No hay coincidencias';
+                        }
+                    }
+                } else {
+                    $result['exception'] = 'Ingrese un valor para buscar';
+                }
             break;                
             default:
             $result['exception'] = 'Acción no disponible dentro de la sesión';
@@ -80,7 +98,14 @@ if (isset($_GET['action'])) {
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {
-             
+            case 'logOut':
+                if (session_destroy()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Sesión eliminada correctamente';
+                } else {
+                    $result['exception'] = 'Ocurrió un problema al cerrar la sesión';
+                }
+            break;
                 case 'readAll':
                     if ($result['dataset'] = $usuario->readAll()) {
                         $result['status'] = 1;
@@ -119,42 +144,25 @@ if (isset($_GET['action'])) {
                             }                                            
                         }
                     break; 
-                    case 'autenticacion':
-                        if ($empleados->setId($_POST['idempleado'])) {
-                            if ($data = $empleados->readOne()) {
-                                if ($empleados->setCodigo($_POST['codigo'])) {
-                                    if ($empleados->autenticacion()) {
-                                        $result['status'] = 1;
-                                        $result['message'] = 'Empleado confirmado correctamente'; 
-                                    } else {
-                                    $result['exception'] = Database::getException();
-                                }
-                            } else {
-                                $result['exception'] = 'Empleado inexistente';
-                            }
-                        } else {
-                            $result['exception'] = 'Empleado inexistente';
-                        }
-                        } else {
-                            $result['exception'] = 'Empleado incorrecto';
-                        }
-                        break;    
-                                           
                     default:
                          $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }
-        
+        ?>
+        <?php
 require_once('../../helpers/emailtest.php');
-$emailtest = new emailtest;
-if (isset($_POST['codigo'])) {
-        $result['message'] = 'Codigo enviado correctamente'; 
+    $emailtest = new emailtest;
+    if (isset($_POST['codigoos'])) {                                
+        $result['message'] = 'Correo enviado correctamente'; 
     }
-}
+?>
+<?php
+    }
     // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
     header('content-type: application/json; charset=utf-8');
     // Se imprime el resultado en formato JSON y se retorna al controlador.
     print(json_encode($result));
-    
-} else {
-    
+    } else {
 }
+?>
+
+
