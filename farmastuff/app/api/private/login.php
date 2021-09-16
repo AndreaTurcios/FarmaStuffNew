@@ -299,7 +299,40 @@ if (isset($_GET['action'])) {
                     } else {
                         $result['exception'] = 'Claves distintas';
                     }     
-                    break;                      
+                    break; 
+                
+                case 'tiempocontra':
+                $_POST = $usuario->validateForm($_POST);
+                if ($usuario->checkUser($_POST['usuario'])) {
+                    if ($usuario->getEstadoEmpleado() == 1) {
+                        if ($usuario->checkPassword($_POST['clave'])) {
+                            if ($usuario->obtenerDiff()) {
+                                $result['exception'] = 'Debe cambiar su contraseña';
+                            } else {
+                                $result['status'] = 1;
+                                $result['message'] = 'Su contraseña es válida';
+                            }
+                        } else {
+                            if (Database::getException()) {
+                                $result['exception'] = Database::getException();
+                            } else {
+                                $result['exception'] = 'Clave incorrecta';
+                            }
+                        }
+                    } else {
+                        $result['exception'] = 'La cuenta ha sido desactivada';
+                    }
+                } else {
+                    if (Database::getException()) {
+                        $result['exception'] = Database::getException();
+                    } else {
+                        $result['exception'] = 'Usuario incorrecto';
+                    }
+                }
+                break;
+
+                
+                
                     default:
                          $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }
