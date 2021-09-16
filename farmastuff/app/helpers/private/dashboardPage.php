@@ -69,36 +69,35 @@ class Dashboard_Page {
                         <div class="divider"></div>
                         </li> 
                         
-                        <li><a href="#" onclick="changePassword('.$_SESSION['idempleado'].')"><i class="material-icons left">key</i>Cambiar contraseña</a></li>
+                        <li><a href="#" onclick="changePassword()"><i class="material-icons left">key</i>Cambiar contraseña</a></li>
                         <li><a href="#" onclick="logOut()"><i class="material-icons left">highlight_off</i>Cerrar sesión</a></li>  
                 </ul> 
-
-    <div id="change-modal" class="modal">
-        <div class="modal-content">          
-            <!-- Título para la caja de dialogo -->
-            <h4 id="modal-title" class="center-align"></h4>
-            <form id="change-form" method="post" enctype="multipart/form-data"></form>
-                <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                <input class="" type="number" id="idempleado" name="idempleado"/>
-                <div class="row">
-                    <div class="input-field col s12 m6">
-                        <i class="material-icons prefix">security</i>
-                        <input type="password" id="clave" name="clave" class="validate" required/>
-                        <label for="clave">Clave</label>
+                    <div id="change-modal" class="modal">
+                        <div class="modal-content">          
+                            <!-- Título para la caja de dialogo -->
+                            <h4 id="modal-title" class="center-align"></h4>
+                            <form id="change-form" method="post" enctype="multipart/form-data">
+                                <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                                <input class="" type="number" id="idempleado" name="idempleado"/>
+                                <div class="row">
+                                    <div class="input-field col s12 m6">
+                                        <i class="material-icons prefix">security</i>
+                                        <input type="password" id="clavempleado" name="clavempleado" class="validate" required/>
+                                        <label for="clavempleado">Clave</label>
+                                    </div>
+                                    <div class="input-field col s12 m6">
+                                        <i class="material-icons prefix">security</i>
+                                        <input type="password" id="confclave" name="confclave" class="validate" required/>
+                                        <label for="confclave">Confirmar clave</label>
+                                    </div>
+                                </div>
+                                <div class="row center-align">
+                                    <a href="#" class="btn waves-effect grey tooltipped modal-close" data-tooltip="Cancelar"><i class="material-icons">cancel</i></a>
+                                    <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Guardar" id="submit"><i class="material-icons">save</i></button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="input-field col s12 m6">
-                        <i class="material-icons prefix">security</i>
-                        <input type="password" id="confclave" name="confclave" class="validate" required/>
-                        <label for="confclave">Confirmar clave</label>
-                    </div>
-                </div>
-                <div class="row center-align">
-                    <a href="#" class="btn waves-effect grey tooltipped modal-close" data-tooltip="Cancelar"><i class="material-icons">cancel</i></a>
-                    <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Guardar" id="submit"><i class="material-icons">save</i></button>
-                </div>
-            </form>
-        </div>
-    </div>
     <script type="text/javascript" src="../../app/controllers/private/cambio.js"></script>
 </header>  
 </main>

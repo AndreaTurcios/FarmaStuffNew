@@ -267,10 +267,37 @@ class usuario extends Validator
         return $this->correo;
     }
 
+
     /*
     *   Métodos para gestionar la cuenta del usuario.
     */    
     
+    public function updateRow()
+    { $hash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $sql = 'UPDATE empleado 
+                SET nombreempleado=?,apellidoempleado=?,telefonoempleado=?,direccionempleado=?,correoempleado=?,estadoempleado=?,usuario=?,clave=?,idtipoempleado=?
+                WHERE idempleado = ?';
+        $params = array($this->nombreempleado, $this->apellidoempleado, $this->telefonoempleado,$this->direccionempleado,$this->correoempleado,$this->estadoempleado,$this->usuario,$hash,$this->idtipoempleado, $this->id);
+        return Database::executeRow($sql, $params);
+    }
+
+    public function updateRowPassword()
+    { $hash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $sql = 'UPDATE empleado 
+                SET clave=?
+                WHERE idempleado = ?';
+        $params = array($hash, $_SESSION['idempleado']);
+        return Database::executeRow($sql, $params);
+    }
+
+    public function readOne()
+    {
+        $sql = 'SELECT idempleado,nombreempleado,apellidoempleado,telefonoempleado,direccionempleado,correoempleado,estadoempleado,usuario,clave,idtipoempleado
+                FROM empleado 
+                WHERE idempleado = ?';
+        $params = array($this->id);
+        return Database::getRow($sql, $params);
+    }
     
     public function createRowHistorial()
     {       
@@ -282,13 +309,14 @@ class usuario extends Validator
 
     public function checkUser($usuario)
     {
-        $sql = 'SELECT idempleado, correoempleado, idtipoempleado FROM empleado WHERE usuario = ?';
+        $sql = 'SELECT idempleado, correoempleado, idtipoempleado, clave FROM empleado WHERE usuario = ?';
         $params = array($usuario);
         if ($data = Database::getRow($sql, $params)) {
             $this->id = $data['idempleado'];
             $this->correoempleado = $data['correoempleado'];
             $this->idtipoempleado  = $data['idtipoempleado'];
             $this->usuario = $usuario;
+            
             return true;
         } else {
             return false;
