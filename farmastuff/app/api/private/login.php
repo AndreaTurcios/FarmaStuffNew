@@ -330,9 +330,31 @@ if (isset($_GET['action'])) {
                     }
                 }
                 break;
-
-                
-                
+                case 'changePassword':
+                    $_POST = $usuario->validateForm($_POST);
+                    if($usuario->setId($_POST['idempleado'])){
+                        if ($usuario->readOne()) {
+                            if ($_POST['clave'] == $_POST['confclave']) {
+                                if ($usuario->setClave($_POST['clave'])) {
+                                    if ($usuario->updatePassword()) {
+                                        $result['status'] = 1;
+                                        $result['message'] = 'Usuario modificado correctamente';
+                                    } else {
+                                        $result['exception'] = Database::getException();
+                                    }  
+                                }else {
+                                    $result['exception'] ='tipo incorrecto';
+                                }
+                            }else {
+                                $result['exception'] ='Seleccione un tipo empleado';
+                            }
+                        } else {
+                            $result['exception'] = $usuario->getPasswordError();
+                        }
+                    } else {
+                        $result['exception'] = 'Claves diferentes';
+                    }
+                    break;
                     default:
                          $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }

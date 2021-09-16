@@ -40,11 +40,8 @@ try {
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = utf8_decode('Envío de código para recuperación de contraseñas');
     $mail->Body    = 'Hola, le saludamos de FarmaStuff, le enviamos este correo para corroborar su correo electrónico. 
-    En caso no haya solicitado cambio de contraseña, cambié su contraseña inmediatamente en el apartado de cambiar contraseña de FarmaStuff.
-    
-    
-    Su código de seguridad es: <h2> '.$codigos.' </h2>'.' 
-    --
+    Su código de recuperación es: <h2> '.$codigos.' </h2>'.' 
+    En caso no haya solicitado un cambio de contraseña le sugerimos cambie su contraseña inmediatamente en el apartado de cambiar contraseña interno de FarmaStuff.
     <br><p>
     𝕔 FarmaStuff - 2021, El Salvador';
     //Send Email
