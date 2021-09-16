@@ -67,7 +67,7 @@ if (isset($_GET['action'])) {
                 if ($usuario->checkUser($_POST['usuario'])) {
                     if ($usuario->checkPassword($_POST['clave'])) {
                         if ($usuario->getFecha() >= date('Y-m-d')) {
-                            $result['status'] = 1;
+                            $result['status'] = 1;  
                             $result['message'] = 'Autenticación correcta';
                             $_SESSION['idempleado'] = $usuario->getId();
                             $_SESSION['usuario'] = $usuario->getUsuario();
