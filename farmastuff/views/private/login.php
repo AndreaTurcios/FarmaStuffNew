@@ -16,12 +16,12 @@ Dashboard_Page::headerTemplate('Login');
 
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">person_pin</i>
-                <input id="usuario" type="text" name="usuario" class="validate" required/>
+                <input id="usuario" type="text" name="usuario" class="validate" required oncopy="return false" oncut="return false" onpaste="return false"/>
                 <label for="usuario">Alias</label>
             </div>
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">security</i>
-                <input id="clave" type="password" name="clave" class="validate" required/>
+                <input id="clave" type="password" name="clave" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
                 <label for="clave">Clave</label>
             </div>
             <div class="col s12 center-align">
