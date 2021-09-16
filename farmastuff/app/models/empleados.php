@@ -313,4 +313,36 @@ class Empleados extends Validator{
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
+
+	    public function checkUserD($usuario)
+    {
+        $sql = 'SELECT idempleado, correoempleado, idtipoempleado, TO_CHAR(fecharegistro + INTERVAL \'90 days\', \'yyyy-mm-dd\' AS dia_contra)
+         FROM empleado
+        WHERE usuario = ?';
+        $params = array($usuario);
+        if ($data = Database::getRow($sql, $params)) {
+            $this->id = $data['idempleado'];
+            $this->correoempleado = $data['correoempleado'];
+            $this->idtipoempleado  = $data['idtipoempleado'];
+            $this->fecha = $data['dia_contra'];
+            $this->usuario = $usuario;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function changePasswordD()
+    {
+        //Se coloca la zona horaria local ya que en esta parte se quiere obtener la hora del servidor
+        date_default_timezone_set('America/El_Salvador');
+        //Y se obtiene esa fecha para que en el campo se actualice fecharegistro
+        $fecha = date('Y-m-d');
+
+        $hash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $sql = 'UPDATE empleado SET clave = ? , fecharegistro = ? WHERE idempleado = 7';
+        $params = array($hash, $fecha, $this->id);
+        return Database::executeRow($sql, $params);
+    }
+	
 }

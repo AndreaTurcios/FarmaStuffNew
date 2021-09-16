@@ -62,14 +62,21 @@ if (isset($_GET['action'])) {
             break;
             case 'logIn':
                 $_POST = $usuario->validateForm($_POST);
+                //Se coloca la zona horaria para obtener la fecha del server
+                date_default_timezone_set('America/El_Salvador');
                 if ($usuario->checkUser($_POST['usuario'])) {
                     if ($usuario->checkPassword($_POST['clave'])) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Autenticación correcta';
-                        $_SESSION['idempleado'] = $usuario->getId();
-                        $_SESSION['usuario'] = $usuario->getUsuario();
-                        $_SESSION['correo'] = $usuario->getCorreoEmpleado();
-                        $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
+                        if ($usuario->getFecha() >= date('Y-m-d')) {
+                            $result['status'] = 1;
+                            $result['message'] = 'Autenticación correcta';
+                            $_SESSION['idempleado'] = $usuario->getId();
+                            $_SESSION['usuario'] = $usuario->getUsuario();
+                            $_SESSION['correo'] = $usuario->getCorreoEmpleado();
+                            $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
+                        } else {
+                            $result['exception'] = 'Ya han pasado los 90 días desde el último cambio de contraseña, inicie sesión haciendo el respectivo cambio de contraseña';
+                            $result['contra'] = 1;
+                        }
                     } else {
                         if (Database::getException()) {
                             $result['exception'] = Database::getException();
@@ -83,9 +90,9 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'error e';
                     } else {
                         $result['exception'] = 'Alias incorrecto';
-                    }                                            
+                    }
                 }
-            break;  
+                break;
             case 'readOneCodigo':                        
                 $_POST = $usuario->validateForm($_POST);
                 if ($_POST['codigoos'] != '') {
@@ -322,35 +329,6 @@ if (isset($_GET['action'])) {
                     }     
                     break; 
                 
-                case 'tiempocontra':
-                $_POST = $usuario->validateForm($_POST);
-                if ($usuario->checkUser($_POST['usuario'])) {
-                    if ($usuario->getEstadoEmpleado() == 1) {
-                        if ($usuario->checkPassword($_POST['clave'])) {
-                            if ($usuario->obtenerDiff()) {
-                                $result['exception'] = 'Debe cambiar su contraseña';
-                            } else {
-                                $result['status'] = 1;
-                                $result['message'] = 'Su contraseña es válida';
-                            }
-                        } else {
-                            if (Database::getException()) {
-                                $result['exception'] = Database::getException();
-                            } else {
-                                $result['exception'] = 'Clave incorrecta';
-                            }
-                        }
-                    } else {
-                        $result['exception'] = 'La cuenta ha sido desactivada';
-                    }
-                } else {
-                    if (Database::getException()) {
-                        $result['exception'] = Database::getException();
-                    } else {
-                        $result['exception'] = 'Usuario incorrecto';
-                    }
-                }
-                break;
                 case 'changePassword':
                     $_POST = $usuario->validateForm($_POST);
                     if($usuario->setId($_POST['idempleado'])){
