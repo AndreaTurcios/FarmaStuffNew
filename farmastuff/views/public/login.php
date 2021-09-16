@@ -19,10 +19,10 @@ Dashboard_Page::headerTemplate('Login');
                 </div>
                 <span><i class="fas fa-user-alt"></i> Inicio de sesión</span><br/>
             <div class="form-group">                
-                <input id="usuariocliente" type="text" name="usuariocliente" class="validate" required/>
+                <input id="usuariocliente" type="text" name="usuariocliente" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" />
             </div>
             <div class="form-group">
-                <input id="clavecliente" type="password" name="clavecliente" class="validate" required/>
+                <input id="clavecliente" type="password" name="clavecliente" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
             </div>
               <p>
               <div class="col s12 center-align">

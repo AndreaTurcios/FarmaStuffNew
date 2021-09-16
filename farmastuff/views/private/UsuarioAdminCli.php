@@ -101,17 +101,17 @@ Dashboard_Page::headerTemplate('Clientes');
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">email</i>
-                            <input id="correo_clientes" type="email" name="correo_clientes" class="validate" maxlength="100" required/>
+                            <input id="correo_clientes" type="email" name="correo_clientes" class="validate" maxlength="100" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
                             <label for="correo_clientes">Correo Cliente</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">phone</i>
-                            <input id="telefono_clientes" type="tel" name="telefono_clientes" class="validate" placeholder="0000-0000" pattern="[2,6,7]{1}[0-9]{3}[-][0-9]{4}" required/>
+                            <input id="telefono_clientes" type="tel" name="telefono_clientes" class="validate" placeholder="0000-0000" pattern="[2,6,7]{1}[0-9]{3}[-][0-9]{4}" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
                             <label for="telefono_clientes">Teléfono Cliente</label>
                         </div>                       
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">badge</i>
-                            <input id="dui_clientes" type="text" name="dui_clientes" class="validate" placeholder="00000000-0" pattern="[0-9]{8}[-][0-9]{1}" required/>
+                            <input id="dui_clientes" type="text" name="dui_clientes" class="validate" placeholder="00000000-0" pattern="[0-9]{8}[-][0-9]{1}" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
                             <label for="dui_clientes">Dui Cliente</label>
                         </div>
                         <div class="input-field col s12 m6">
