@@ -299,9 +299,34 @@ if (isset($_GET['action'])) {
                     } else {
                         $result['exception'] = 'Claves distintas';
                     }     
-                    break;                      
-                    default:
-                         $result['exception'] = 'Acción no disponible fuera de la sesión'; 
+                    break; 
+                    case 'changePassword':
+                        $_POST = $usuario->validateForm($_POST);
+                        if($usuario->setId($_POST['idempleado'])){
+                            if ($usuario->readOne()) {
+                                if ($_POST['clave'] == $_POST['confclave']) {
+                                    if ($usuario->setClave($_POST['clave'])) {
+                                        if ($usuario->updatePassword()) {
+                                            $result['status'] = 1;
+                                            $result['message'] = 'Usuario modificado correctamente';
+                                        } else {
+                                            $result['exception'] = Database::getException();
+                                        }  
+                                    }else {
+                                        $result['exception'] ='tipo incorrecto';
+                                    }
+                                }else {
+                                    $result['exception'] ='Seleccione un tipo empleado';
+                                }
+                            } else {
+                                $result['exception'] = $usuario->getPasswordError();
+                            }
+                        } else {
+                            $result['exception'] = 'Claves diferentes';
+                        }
+                        break;
+                        default:
+                        $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }
     }
     // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
@@ -309,6 +334,7 @@ if (isset($_GET['action'])) {
     // Se imprime el resultado en formato JSON y se retorna al controlador.
     print(json_encode($result));
     } else {
+        print(json_encode('Recurso no disponible'));
 }
 ?>
 

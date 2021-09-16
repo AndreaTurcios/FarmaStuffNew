@@ -102,7 +102,7 @@ if (isset($_GET['action'])) {
                         $_POST = $empleados->validateForm($_POST);
                         if($empleados->setId($_POST['idempleado'])){
                             if ($empleados->readOne()) {
-                                if ($_POST['clave_cliente'] == $_POST['confirmar_clave']) {
+                                if ($_POST['clave'] == $_POST['confirmar_clave']) {
                                     if ($empleados->setClave($_POST['clave'])) {
                                         if ($empleados->setIDTipoEmpleado($_POST['tipoempleado'])) {   
                                             if ($empleados->updatePassword()) {

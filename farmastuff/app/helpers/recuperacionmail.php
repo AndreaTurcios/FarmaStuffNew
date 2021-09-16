@@ -36,17 +36,17 @@ try {
     $mail->Port       = 465;             //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     //Recipients
     $mail->setFrom('farmastuff.devteam@gmail.com', 'FarmaStuff Security Department');
-    $mail->addAddress($correo);     //Add a recipient
-    
-    //Attachments    
-    //$mail->addAttachment('../../resources/img/Originals/logoconpng.png', 'new.jpg');    //Optional name
-
-    
-    //Content
+    $mail->addAddress($correo); 
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = utf8_decode('Envío de código para recuperación de contraseñas');
-    $mail->Body    = 'Este es su código de recuperación para su contraseña:   '.$codigos;
-
+    $mail->Body    = 'Hola, le saludamos de FarmaStuff, le enviamos este correo para corroborar su correo electrónico. 
+    En caso no haya solicitado cambio de contraseña, cambié su contraseña inmediatamente en el apartado de cambiar contraseña de FarmaStuff.
+    
+    
+    Su código de seguridad es: <h2> '.$codigos.' </h2>'.' 
+    --
+    <br><p>
+    𝕔 FarmaStuff - 2021, El Salvador';
     //Send Email
     $mail->send();
     echo 'Message has been sent';

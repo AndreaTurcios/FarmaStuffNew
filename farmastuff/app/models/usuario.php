@@ -322,11 +322,20 @@ class usuario extends Validator
         }
     }
 
+    public function updatePassword()
+    { $hash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $sql = 'UPDATE empleado 
+        SET clave=?
+        WHERE idempleado = ?';
+        $params = array($hash,$this->id);
+        return Database::executeRow($sql, $params);
+    }
+    
     public function changePassword()
     {
         $hash = password_hash($this->clave, PASSWORD_DEFAULT);
         $sql = 'UPDATE empleado SET clave = ? WHERE idempleado = ?';
-        $params = array($hash, $_SESSION['idempleado']);
+        $params = array($hash, $this->id);
         return Database::executeRow($sql, $params);
     }
 
@@ -357,7 +366,6 @@ class usuario extends Validator
         $params = null;
         return Database::getRows($sql, $params);
     } 
-
 
     public function searchRows($value)
     {

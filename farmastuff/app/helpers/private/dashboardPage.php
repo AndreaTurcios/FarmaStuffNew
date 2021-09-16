@@ -79,22 +79,22 @@ class Dashboard_Page {
             <h4 id="modal-title" class="center-align"></h4>
             <form id="change-form" method="post" enctype="multipart/form-data"></form>
                 <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                <input class="hide" type="number" id="idempleado" name="idempleado"/>
+                <input class="" type="number" id="idempleado" name="idempleado"/>
                 <div class="row">
                     <div class="input-field col s12 m6">
                         <i class="material-icons prefix">security</i>
-                        <input type="password" id="clave_cliente" name="clave_cliente" class="validate" required/>
-                        <label for="clave_cliente">Clave</label>
+                        <input type="password" id="clave" name="clave" class="validate" required/>
+                        <label for="clave">Clave</label>
                     </div>
                     <div class="input-field col s12 m6">
                         <i class="material-icons prefix">security</i>
-                        <input type="password" id="confirmar_clave" name="confirmar_clave" class="validate" required/>
-                        <label for="confirmar_clave">Confirmar clave</label>
+                        <input type="password" id="confclave" name="confclave" class="validate" required/>
+                        <label for="confclave">Confirmar clave</label>
                     </div>
                 </div>
                 <div class="row center-align">
                     <a href="#" class="btn waves-effect grey tooltipped modal-close" data-tooltip="Cancelar"><i class="material-icons">cancel</i></a>
-                    <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Guardar"><i class="material-icons">save</i></button>
+                    <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Guardar" id="submit"><i class="material-icons">save</i></button>
                 </div>
             </form>
         </div>
