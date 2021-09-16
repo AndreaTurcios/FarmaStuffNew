@@ -101,13 +101,14 @@ class Dashboard_Page {
     </div>
     <script type="text/javascript" src="../../app/controllers/private/cambio.js"></script>
 </header>  
+</main>
         ');
     }
 
     //Método para imprimir el pie y establecer el controlador del documento
     public static function footerTemplate($controller) {
         print('
-                </main>
+               
                 <!--Pie del documento-->
                 <footer class="page-footer blue-grey darken-2">
                     <div class="container">
