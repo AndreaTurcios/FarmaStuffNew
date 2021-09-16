@@ -97,7 +97,7 @@ document.getElementById('session-form').addEventListener('submit', function (eve
                     sweetAlert(2, response.exception, 'login.php');  
                 }
                 if (response.contra){
-                    sweetAlert(3, response.exception, 'cambionov.php');
+                    sweetAlert(3, response.exception, 'cambioContra.php');
                 } else{
                     sweetAlert(3, response.exception, null);
 
