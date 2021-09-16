@@ -429,22 +429,5 @@ class usuario extends Validator
         return Database::getRow($sql, $params);
     } 
     
-        public function obtenerDiff()
-    {
-        $sql = 'SELECT fecharegistro FROM empleado WHERE idempleado = ?';
-        $params = array($this->id);
-        $data = Database::getRow($sql, $params);
-        $fechaHoy = date('Y-m-d');
-        $dateDifference = abs(strtotime($fechaHoy) - strtotime($data['fecharegistro']));
-        $years  = floor($dateDifference / (365 * 60 * 60 * 24));
-        $months = floor(($dateDifference - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-        $days   = floor(($dateDifference - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 *24) / (60 * 60 * 24));
-
-        if($days>=1){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
 }
