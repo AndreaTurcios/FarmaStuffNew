@@ -4,7 +4,6 @@ include("../../app/helpers/public/plantillaHeaderLogin.php");
 Dashboard_Page::headerTemplate('Login');
 ?>
 
-<link href="../../resources/css/login.css" type="text/css" rel="stylesheet" media="screen,projection" />
 
 <div class="container">
     <div class="row" >
@@ -16,7 +15,7 @@ Dashboard_Page::headerTemplate('Login');
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">email</i>
                 <input id="correocliente" type="email" name="correocliente" class="validate" required/>
-                <label for="correocliente">Correo Empleado</label>
+                <label for="correocliente">Correo cliente</label>
             </div>           
             <div class="col s12 center-align">
                 <button type="submit" id="envio" name="envio" class="btn waves-effect blue tooltipped" data-tooltip="Ingresar"><i class="material-icons">send</i></button>                

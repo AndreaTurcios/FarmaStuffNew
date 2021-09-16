@@ -63,7 +63,6 @@ if (isset($_GET['action'])) {
             case 'logIn':
                 $_SESSION['cont'] =  $_SESSION['cont']+1;
                 $_POST = $usuario->validateForm($_POST);
-
                 if ($usuario->checkUser($_POST['usuario'])) {
                     if ($usuario->checkPassword($_POST['clave'])) {
                         $result['status'] = 1;
@@ -95,7 +94,7 @@ if (isset($_GET['action'])) {
 
                     }                                            
                 }
-             if( $_SESSION['cont'] >=6 ){
+             if( $_SESSION['cont'] >=3 ){
                 $result['exception'] = 'Se ha superado el número de intentos permitidos. Se ha bloqueado su usuario.
                 Hable con un administrador para poder recuperar su usuario';
             }
