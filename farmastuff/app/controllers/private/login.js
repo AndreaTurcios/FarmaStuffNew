@@ -77,7 +77,7 @@ document.getElementById('session-form').addEventListener('submit', function (eve
     document.getElementById("codigovalidar").value = validarc.value; 
     var codigo = document.getElementById("codigovalidar").value = validarc.value; 
     
-    fetch(API_LOGIN + 'logIn', {           
+      fetch(API_LOGIN + 'logIn', {           
         method: 'post',
         body: new FormData(document.getElementById('session-form'))
     }).then(function (request) {
@@ -95,6 +95,12 @@ document.getElementById('session-form').addEventListener('submit', function (eve
                     sweetAlert(1, response.message, 'confirmacion.php');                    
                 } else {
                     sweetAlert(2, response.exception, 'login.php');  
+                }
+                if (response.contra){
+                    sweetAlert(3, response.exception, 'cambionov.php');
+                } else{
+                    sweetAlert(3, response.exception, null);
+
                 }
             });
         } else {
