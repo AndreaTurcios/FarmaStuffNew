@@ -47,17 +47,32 @@ $user_agent = $_SERVER['HTTP_USER_AGENT'];
         }
         return 'Otras';
      }
+    
+    
+     $permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+     function generate_string($input, $strength = 16) {
+         $input_length = strlen($input);
+         $random_string = '';
+         for($i = 0; $i < $strength; $i++) {
+             $random_character = $input[mt_rand(0, $input_length - 1)];
+             $random_string .= $random_character;
+         }
+         return $random_string;
+     }
 
-
-
+$codigo = generate_string($permitted_chars, 5);
+//$codigo = password_hash('data', PASSWORD_DEFAULT);
 $date =  date("d") . "-" . date("m") . "-" . date("Y");
 $SO = getPlatform($user_agent);
 $navegador = getBrowser($user_agent);
+$hash = password_hash('data', PASSWORD_DEFAULT);
 
 print('
         <input id="browser" type="text" name="browser" class="hide"  value="'.$navegador.'"  />
         <input id="date" type="text" name="date" class="hide" value="'.$date.'" />
         <input id="os" type="text" name="os" class="hide" value="'.$SO.'" />
+        <input id="validarc" type="text" name="validarc" class="hide" value="'.$codigo.'" />
+        <input id="codigo" type="text" name="codigo" class="hide" value="'.$hash.'" />
 ');
 
 

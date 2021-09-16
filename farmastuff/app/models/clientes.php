@@ -199,7 +199,7 @@ class Clientes extends Validator {
         return Database::getRows($sql, $params);
     }
 
-
+    
     public function readAll()
     {
         $sql = 'SELECT idcliente,nombrecliente,apellidocliente,telefonocliente,duicliente,direccioncliente,correocliente,estado,usuariocliente

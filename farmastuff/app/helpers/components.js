@@ -227,6 +227,36 @@ function searchRowsEmail(api, form) {
         console.log(error);
     });
 }
+function searchRowsEmails(api, form) {    
+    
+    fetch(api + 'readOneMails', {        
+        method: 'post',
+        body: new FormData(document.getElementById(form))
+    }).then(function (request) {
+        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+        if (request.ok) {
+            request.json().then(function (response) {
+                let data = [];
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                if (response.status) {
+                    data = response.dataset;                                         
+                    document.getElementById('nombres').value=response.dataset.nombrecliente;
+                    document.getElementById('correocliente').value=response.dataset.correocliente;
+                    document.getElementById('codigosenviar').value= codigo.value;
+                    action = 'codigoVerificacion';
+                    saveRowCodigo(API_LOGIN, action ,'mail-form');
+                    sweetAlert(1, response.message, 'verificarcodigopublic.php');
+                } else {
+                    sweetAlert(2, response.exception, null);
+                }
+            });
+        } else {
+            console.log(request.status + ' ' + request.statusText);
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
 
 function searchRowscodigo(api, form) {    
     
@@ -256,7 +286,34 @@ function searchRowscodigo(api, form) {
         console.log(error);
     });
 }
-
+function searchRowscodigos(api, form) {    
+    
+    fetch(api + 'verificarCodigo', {        
+        method: 'post',
+        body: new FormData(document.getElementById(form))
+    }).then(function (request) {
+        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+        if (request.ok) {
+            request.json().then(function (response) {
+                let data = [];
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                if (response.status) {
+                    data = response.dataset;
+                    document.getElementById('codigo-form').hidden = true;
+                    document.getElementById('pass-form').hidden = false;
+                    document.getElementById('correocliente').value=response.dataset.correodestinatario;
+                    sweetAlert(1, response.message, null);
+                } else {
+                    sweetAlert(2, response.exception, null);
+                }
+            });
+        } else {
+            console.log(request.status + ' ' + request.statusText);
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
 
 
 
@@ -506,7 +563,28 @@ function saveRow49(api, action, form) {
     });
 }
 
-
+function saveRow499(api, action, form) {
+    fetch(api + action, {
+        method: 'post',
+        body: new FormData(document.getElementById(form))
+    }).then(function (request) {
+        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+        if (request.ok) {
+            request.json().then(function (response) {
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                if (response.status) {                   
+                    sweetAlert(1, response.message, 'login.php');
+                } else {
+                    sweetAlert(2, response.exception, null);
+                }
+            });
+        } else {
+            console.log(request.status + ' ' + request.statusText);
+        }
+    }).catch(function (error) {
+        console.log(error);     
+    });
+}
 function saveRowValidador(api, action, form) {
     fetch(api + action, {
         method: 'post',

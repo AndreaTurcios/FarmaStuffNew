@@ -20,6 +20,7 @@ class usuarioCliente extends Validator
     private $fecha = null;
     private $browser = null;
     private $os = null;
+    private $codigo=null;
 
     public function setId($value)
     {
@@ -30,7 +31,15 @@ class usuarioCliente extends Validator
             return false;
         }
     }
-
+    public function setCodigo($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->codigo = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function setNombreCliente($value)
     {
         if ($this->validateAlphanumeric($value, 1, 50)) {
@@ -346,4 +355,35 @@ class usuarioCliente extends Validator
         $params = null;
         return Database::getRows($sql, $params);
     }
+    public function searchRowscorreo($value)
+    {
+        $sql = "SELECT idcliente, nombrecliente, apellidocliente, correocliente ,usuariocliente                            
+                FROM cliente                 
+                WHERE correocliente ILIKE ? ";
+        $params = array("%$value%");
+        return Database::getRow($sql, $params);
+    }
+    public function verificarCodigo()
+    {
+        $sql = "SELECT correodestinatario , codigo
+                from codigorecuperacionpublico
+                Where codigo = ?
+                and codigo=(Select codigo from codigorecuperacionpublico Where idrecuperacion=(Select max(idrecuperacion) from codigorecuperacionpublico )) ";
+        $params = array($this->codigo);
+        return Database::getRow($sql, $params);
+    }
+    public function saveCodigo()
+    {       
+        $sql = 'INSERT into codigorecuperacionpublico (codigo, correodestinatario) values (? , ?)';
+        $params = array($this->codigo, $this->correocliente);
+        return Database::executeRow($sql, $params);
+    }
+    public function updateCodigo()
+    {   
+        $hash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $sql = 'UPDATE cliente Set clavecliente = ? Where correocliente = (Select correodestinatario from codigorecuperacionpublico Where idrecuperacion = (Select max(idrecuperacion) From codigorecuperacionpublico ))';
+        $params = array($hash);
+        return Database::executeRow($sql, $params);
+    }
+
 }

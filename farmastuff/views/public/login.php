@@ -31,6 +31,7 @@ Dashboard_Page::headerTemplate('Login');
         </p>
         <div class="divider"></div>
         <a href="registroCliente.php" class="reset">Registrate</a>
+        <a href="recuperarContra.php" class="reset">recuperar</a>
         </form>
   </div>
 </div>

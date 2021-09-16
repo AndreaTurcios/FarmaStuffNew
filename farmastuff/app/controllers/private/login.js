@@ -77,7 +77,7 @@ document.getElementById('session-form').addEventListener('submit', function (eve
     document.getElementById("codigovalidar").value = validarc.value; 
     var codigo = document.getElementById("codigovalidar").value = validarc.value; 
     
-      fetch(API_LOGIN + 'logIn', {           
+    fetch(API_LOGIN + 'logIn', {           
         method: 'post',
         body: new FormData(document.getElementById('session-form'))
     }).then(function (request) {
@@ -94,13 +94,7 @@ document.getElementById('session-form').addEventListener('submit', function (eve
                     saveRowhistorial(API_LOGIN, action ,'session-form');                     
                     sweetAlert(1, response.message, 'confirmacion.php');                    
                 } else {
-                    sweetAlert(2, response.exception, 'login.php');  
-                }
-                if (response.contra){
-                    sweetAlert(3, response.exception, 'cambioContra.php');
-                } else{
-                    sweetAlert(3, response.exception, null);
-
+                    sweetAlert(2, response.exception, null);  
                 }
             });
         } else {
@@ -110,7 +104,7 @@ document.getElementById('session-form').addEventListener('submit', function (eve
         console.log(error);
     });
 });
-
+/*
 function sessionTime() 
 {
         fetch(API_LOGIN + 'sessionTime', {
@@ -137,7 +131,7 @@ function sessionTime()
 document.addEventListener('click', sessionTime);
 
 document.addEventListener('DOMContentLoaded', sessionTime);
-
+*/
 function logOut() {
     swal({
         title: 'Advertencia',
@@ -173,4 +167,52 @@ function logOut() {
         }
     });
 }
+/*
+fetch(API_LOGIN + 'tiempocontra', {
+    method: 'post',
+    body: new FormData(document.getElementById('session-form'))
 
+}).then(function (request) {
+    // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+    if (request.ok) {
+        request.json().then(function (response) {
+            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción
+            if (response.status) {
+                fetch(API_LOGIN + 'logIn', {
+                    method: 'post',
+                    body: new FormData(document.getElementById('session-form'))
+
+                }).then(function (request) {
+                    // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+                    if (request.ok) {
+                        request.json().then(function (response) {
+                            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción
+                            if (response.status) {
+                                sweetAlert(1, response.message, null); 
+                            
+
+                            } else {
+                                sweetAlert(2, response.exception, null);                  
+
+                            }
+                        });
+                    } else {
+                        console.log(request.status + ' ' + request.statusText);
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            } else {
+                sweetAlert(4, response.exception, null);                  
+
+            }
+        });
+    } else {
+        console.log(request.status + ' ' + request.statusText);
+    }
+}).catch(function (error) {
+    console.log(error);
+    
+});
+*/

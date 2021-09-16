@@ -1,30 +1,31 @@
 <?php
 //Se incluye la plantilla del encabezado para la página web
-include("../../app/helpers/public/plantillaHeader.php");
+include("../../app/helpers/public/plantillaHeaderLogin.php");
+Dashboard_Page::headerTemplate('Login');
 ?>
+
 <link href="../../resources/css/login.css" type="text/css" rel="stylesheet" media="screen,projection" />
 
 <div class="container">
-  <div class="container-fluid">
-            <form id='login' class="sign-box enters" method="post">
-                <h5> Restablecimiento de contraseña </h5>
-                <div class="sign-avatar">
-                    <img src="../../resources/img/Correo.png" alt="">
-                </div>
-                <span>Ingresar Correo Electronico</span><br/>
-                <div class="input-field col s12">
-                    <input type="email" id="email" clas="validate" required >
-                    <label for="email">Email: </label>
-                </div>
-         <p>
-            <button type="submit" class="btn btn-info">Enviar correon</button>
-        </p>
-       
-  </div>
+    <div class="row" >
+        <!-- Formulario para iniciar sesión -->
+        <form method="post"  id="mail-form">
+                <input id="nombres" type="text" name="nombres" class="hide"/>
+                <input id="correo" type="text" name="correo" class="hide"/>
+                <input id="codigosenviar" type="text" name="codigosenviar" class=""/>
+            <div class="input-field col s12 m6 offset-m3">
+                <i class="material-icons prefix">email</i>
+                <input id="correocliente" type="email" name="correocliente" class="validate" required/>
+                <label for="correocliente">Correo Empleado</label>
+            </div>           
+            <div class="col s12 center-align">
+                <button type="submit" id="envio" name="envio" class="btn waves-effect blue tooltipped" data-tooltip="Ingresar"><i class="material-icons">send</i></button>                
+            </div>            
+        </form>  
+    </div>
 </div>
-
 
 <?php
 //Se incluye la plantilla del footer para la página web
-include("../../app/helpers/public/plantillaFooter.php");
+Dashboard_Page::footerTemplate('verificars.js');
 ?>

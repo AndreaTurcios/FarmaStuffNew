@@ -74,7 +74,75 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'Alias incorrecto';
                     }                                            
                 }
-                break;                
+                break;  
+                case 'readOneMails':                        
+                    $_POST = $usuarioCliente->validateForm($_POST);
+                    if ($_POST['correocliente'] != '') {
+                        if ($result['dataset'] = $usuarioCliente->searchRowscorreo($_POST['correocliente'])) {
+                            $result['status'] = 1;
+                            $rows = count($result['dataset']);
+                                $result['message'] = 'Correo Encontrado en el registro';
+                        } else {
+                            if (Database::getException()) {
+                                $result['exception'] = Database::getException();
+                            } else {
+                                $result['exception'] = 'No hay coincidencias';
+                            }
+                        }
+                    } else {
+                        $result['exception'] = 'Ingrese un valor para buscar';
+                    }
+                break;   
+                case 'codigoVerificacion':
+                    $_POST = $usuarioCliente->validateForm($_POST);
+                        if ($usuarioCliente->setCodigo($_POST['codigosenviar'])) {
+                            if ($usuarioCliente->setCorreoCliente($_POST['correocliente'])) {                            
+                            if ($usuarioCliente->saveCodigo()) {
+                                $result['status'] = 1;                                    
+                            } else {
+                                $result['exception'] = Database::getException();                                                        
+                            }
+                        } else {
+                            $result['exception'] = 'Ingrese un valor para enviar correo';
+                        }    
+                    } else {
+                        $result['exception'] = 'Ingrese un valor para enviar codigo';
+                    }    
+                break;  
+                case 'verificarCodigo':
+                    if ($usuarioCliente->setCodigo($_POST['codigos'])) {
+                        if ($result['dataset'] = $usuarioCliente->verificarCodigo()) {
+                            $result['status'] = 1;
+                            $result['message'] = 'Codigo Correcto';
+                        } else {
+                            if (Database::getException()) {
+                                $result['exception'] = Database::getException();
+                            } else {
+                                $result['exception'] = 'Codigo incorrecto';
+                            }
+                        }
+                    } else {
+                        $result['exception'] = 'Codigo Inexistente';
+                    }
+                break; 
+                case 'restaurarClave':
+                    $_POST = $usuarioCliente->validateForm($_POST);
+                            if ($_POST['clave'] == $_POST['confirmacion']) {
+                                if ($usuarioCliente->setclave($_POST['clave'])) {                                
+                                if ($usuarioCliente->updateCodigo()) {
+                                    $result['status'] = 1;
+                                    $result['message'] = 'Clare restaurada correctamente';
+                                } else {
+                                    $result['exception'] = Database::getException();
+                                }                                     
+                    } else {
+                        $result['exception'] = $usuarioCliente->getPasswordError();                            
+                    }
+                } else {
+                    $result['exception'] = 'Claves distintas';
+                }     
+                break; 
+                
                 default:
                     $result['exception'] = 'Acción no disponible fuera de la sesión'; 
              
