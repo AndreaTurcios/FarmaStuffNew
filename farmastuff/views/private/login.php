@@ -12,7 +12,7 @@ Dashboard_Page::headerTemplate('Login');
             <input id="datafecha" type="text" name="datafecha"  class="hide" />
             <input id="databrowser" type="text" name="databrowser" class="hide" />
             <input id="dataos" type="text" name="dataos" class="hide" />
-            <input id="codigovalidar" type="text" name="codigovalidar" class="" />
+            <input id="codigovalidar" type="text" name="codigovalidar" class="hide" />
 
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">person_pin</i>
