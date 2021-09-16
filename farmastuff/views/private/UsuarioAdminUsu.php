@@ -69,7 +69,7 @@ Dashboard_Page::headerTemplate('Usuarios');
         </div>
         <div class="input-field col s12 m6">
             <i class="material-icons prefix">phone</i>
-            <input id="telefonoempleado" type="text" name="telefonoempleado"  placeholder="0000-0000" pattern="[2,6,7]{1}[0-9]{3}[-][0-9]{4}" class="validate" required />
+            <input id="telefonoempleado" type="text" name="telefonoempleado"  placeholder="0000-0000" pattern="[2,6,7]{1}[0-9]{3}[-][0-9]{4}" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off" />
             <label for="telefonoempleado">Teléfono </label>
         </div>
 
@@ -81,23 +81,23 @@ Dashboard_Page::headerTemplate('Usuarios');
 
         <div class="input-field col s12 m6">
             <i class="material-icons prefix">email</i>
-            <input id="correoempleado" type="email" name="correoempleado" class="validate" required/>
+            <input id="correoempleado" type="email" name="correoempleado" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
             <label for="correoempleado">Correo Empleado</label>
         </div>
         <div class="input-field col s12 m6">
             <i class="material-icons prefix">account_circle</i>                            
-            <input id="usuario" type="text" name="usuario" class="validate" required/>
+            <input id="usuario" type="text" name="usuario" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
             <label for="usuario">Usuario</label>
             
         </div>  
         <div class="input-field col s12 m6">
                     <i class="material-icons prefix">security</i>
-                    <input id="clave" type="password" name="clave" class="validate" required/>
+                    <input id="clave" type="password" name="clave" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
                     <label for="clave">Clave</label>
                 </div>
                 <div class="input-field col s12 m6">
                     <i class="material-icons prefix">security</i>
-                    <input id="confclave" type="password" name="confclave" class="validate" required/>
+                    <input id="confclave" type="password" name="confclave" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
                     <label for="confclave">Confirmar clave</label>
                 </div>
         <div class="input-field col s12 m6">
