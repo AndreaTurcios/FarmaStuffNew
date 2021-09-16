@@ -300,33 +300,41 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'Claves distintas';
                     }     
                     break; 
-                    case 'changePassword':
-                        $_POST = $usuario->validateForm($_POST);
-                        if($usuario->setId($_POST['idempleado'])){
-                            if ($usuario->readOne()) {
-                                if ($_POST['clave'] == $_POST['confclave']) {
-                                    if ($usuario->setClave($_POST['clave'])) {
-                                        if ($usuario->updatePassword()) {
-                                            $result['status'] = 1;
-                                            $result['message'] = 'Usuario modificado correctamente';
-                                        } else {
-                                            $result['exception'] = Database::getException();
-                                        }  
-                                    }else {
-                                        $result['exception'] ='tipo incorrecto';
-                                    }
-                                }else {
-                                    $result['exception'] ='Seleccione un tipo empleado';
-                                }
+                
+                case 'tiempocontra':
+                $_POST = $usuario->validateForm($_POST);
+                if ($usuario->checkUser($_POST['usuario'])) {
+                    if ($usuario->getEstadoEmpleado() == 1) {
+                        if ($usuario->checkPassword($_POST['clave'])) {
+                            if ($usuario->obtenerDiff()) {
+                                $result['exception'] = 'Debe cambiar su contraseña';
                             } else {
-                                $result['exception'] = $usuario->getPasswordError();
+                                $result['status'] = 1;
+                                $result['message'] = 'Su contraseña es válida';
                             }
                         } else {
-                            $result['exception'] = 'Claves diferentes';
+                            if (Database::getException()) {
+                                $result['exception'] = Database::getException();
+                            } else {
+                                $result['exception'] = 'Clave incorrecta';
+                            }
                         }
-                        break;
-                        default:
-                        $result['exception'] = 'Acción no disponible fuera de la sesión'; 
+                    } else {
+                        $result['exception'] = 'La cuenta ha sido desactivada';
+                    }
+                } else {
+                    if (Database::getException()) {
+                        $result['exception'] = Database::getException();
+                    } else {
+                        $result['exception'] = 'Usuario incorrecto';
+                    }
+                }
+                break;
+
+                
+                
+                    default:
+                         $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }
     }
     // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
