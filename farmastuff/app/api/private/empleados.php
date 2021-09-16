@@ -128,6 +128,34 @@ if (isset($_GET['action'])) {
                             $result['exception'] ='usuario incorrecto';
                         }
                         break;
+                
+                
+        case 'changePasswordD':
+            $_POST = $empleados->validateForm($_POST);
+            if ($empleados->setId($_POST['idempleado'])) {
+                if ($empleados->readOne()) {
+                    if ($_POST['clave'] == $_POST['confclacam']) {
+                        if ($empleados->setClave($_POST['clavecam'])) {
+                            if ($empleados->changePasswordD()) {
+                                $result['status'] = 1;
+                                $result['message'] = 'Usuario modificado correctamente';
+                            } else {
+                                $result['exception'] = Database::getException();
+                            }
+                        } else {
+                            $result['exception'] = 'Tipo incorrecto';
+                        }
+                    } else {
+                        $result['exception'] = 'Seleccione un tipo empleado';
+                    }
+                } else {
+                    $result['exception'] = $empleados->getPasswordError();
+                }
+            } else {
+                $result['exception'] = 'Claves diferentes';
+            }
+            break;
+                
                 case 'readOne':
                 if ($empleados->setId($_POST['idempleado'])) {
                     if ($result['dataset'] = $empleados->readOne()) {
