@@ -79,14 +79,14 @@ if (isset($_GET['action'])) {
                              $_SESSION['cont']= $_SESSION['cont']+1;
 
                         } else {
-                            $result['exception'] = 'error e';
+                            $result['exception'] = 'Error';
                             $_SESSION['cont']= $_SESSION['cont']+1;
                         }
                     }
                 } else {
                     if (Database::getException()) {
                         $result['exception'] = Database::getException();
-                        $result['exception'] = 'error e';
+                        $result['exception'] = 'Error';
                         $_SESSION['cont']= $_SESSION['cont']+1;
 
                     } else {
@@ -96,7 +96,8 @@ if (isset($_GET['action'])) {
                     }                                            
                 }
              if( $_SESSION['cont'] >=6 ){
-                $result['exception'] = 'nose';
+                $result['exception'] = 'Se ha superado el número de intentos permitidos. Se ha bloqueado su usuario.
+                Hable con un administrador para poder recuperar su usuario';
             }
             break;  
             case 'readOneCodigo':                        
