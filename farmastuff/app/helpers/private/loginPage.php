@@ -71,7 +71,7 @@ print('
         <input id="browser" type="text" name="browser" class="hide"  value="'.$navegador.'"  />
         <input id="date" type="text" name="date" class="hide" value="'.$date.'" />
         <input id="os" type="text" name="os" class="hide" value="'.$SO.'" />
-        <input id="validarc" type="text" name="validarc" class="" value="'.$codigo.'" />
+        <input id="validarc" type="text" name="validarc" class="hide" value="'.$codigo.'" />
         <input id="codigo" type="text" name="codigo" class="hide" value="'.$hash.'" />
 ');
 
