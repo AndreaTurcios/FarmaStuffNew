@@ -12,11 +12,11 @@ include("../../app/helpers/public/plantillaHeader.php");
                     <img src="../../resources/img/Candado.png" alt="">
                 </div>
                 <div class="input-field col s12">
-                    <input type="password" id="password" clas="validate" required >
+                    <input type="password" id="password" clas="validate" oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off" >
                     <label for="password">Contraseña: </label>
                 </div>
                 <div class="input-field col s12">
-                    <input type="password" id="password1" clas="validate" required >
+                    <input type="password" id="password1" clas="validate" oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off" >
                     <label for="password1">Confirmar Contraseña: </label>
                 </div>
          <p>

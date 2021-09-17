@@ -18,12 +18,12 @@ Dashboard_Page::headerTemplate('Cambio contraseña');
             </div>
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">security</i>
-                <input type="password" id="clave_1q2wszdex3cliente" name="clave_cliente" class="validate" required/>
+                <input type="password" id="clave_1q2wszdex3cliente" name="clave_cliente" class="validate" oncopy="return false"  onpaste="return false" required autocomplete="off"/>
                 <label for="clave_cliente">Clave</label>
             </div>
             <div class="input-field col s12 m6">
                 <i class="material-icons prefix">security</i>
-                <input type="password" id="confirmar_clave" name="confirmar_clave" class="validate" required/>
+                <input type="password" id="confirmar_clave" name="confirmar_clave" class="validate" oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
                 <label for="confirmar_clave">Confirmar clave</label>
             </div>
             </div>

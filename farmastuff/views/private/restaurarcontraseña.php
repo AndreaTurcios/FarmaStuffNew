@@ -10,10 +10,10 @@ Dashboard_Page::headerTemplate('Login');
         <form method="post"  id="mail-form">
                 <input id="nombres" type="text" name="nombres" class="hide"/>
                 <input id="correo" type="text" name="correo" class="hide"/>
-                <input id="codigosenviar" type="text" name="codigosenviar" class=""/>
+                <input id="codigosenviar" type="text" name="codigosenviar" class="hide"/>
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">email</i>
-                <input id="correo_empleados" type="email" name="correo_empleados" class="validate" required/>
+                <input id="correo_empleados" type="email" name="correo_empleados" class="validate" oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
                 <label for="correo_empleados">Correo Empleado</label>
             </div>           
             <div class="col s12 center-align">

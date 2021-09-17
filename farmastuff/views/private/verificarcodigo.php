@@ -13,7 +13,7 @@ Dashboard_Page::headerTemplate('Login');
                 <input id="codigo33" type="text" name="codigo33" class="hide"/>
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">person</i>
-                <input id="codigos" type="text" name="codigos" class="validate" required/>
+                <input id="codigos" type="text" name="codigos" class="validate"  onpaste="return false" required autocomplete="off"/>
                 <label for="codigos">Verifique su Código </label>
             </div>           
             <div class="col s12 center-align">
@@ -26,12 +26,12 @@ Dashboard_Page::headerTemplate('Login');
                 <!-- <input id="codigo" type="text" name="codigo" class="hide"/> -->
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">lock</i>
-                <input id="clave" type="password" name="clave" class="validate" required/>
+                <input id="clave" type="password" name="clave" class="validate" oncopy="return false" required autocomplete="off" required/>
                 <label for="clave">Ingrese su Contraseña </label>
             </div>
             <div class="input-field col s12 m6 offset-m3">
                 <i class="material-icons prefix">security</i>
-                <input id="confirmacion" type="password" name="confirmacion" class="validate" required/>
+                <input id="confirmacion" type="password" name="confirmacion" class="validate" oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
                 <label for="confirmacion">Confirme su contraseña </label>
             </div>           
             <div class="col s12 center-align">
