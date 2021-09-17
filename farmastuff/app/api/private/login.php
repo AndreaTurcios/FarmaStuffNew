@@ -17,6 +17,8 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'logOut':
                 unset( $_SESSION['idempleado']);
+                unset($_SESSION['usuario']);
+                unset($_SESSION['correo']);
                 $result['status'] = 1;
                 $result['message'] = 'Sesión eliminada correctamente';               
              break;
