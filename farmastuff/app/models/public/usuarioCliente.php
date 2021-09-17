@@ -22,6 +22,17 @@ class usuarioCliente extends Validator
     private $os = null;
     private $codigoos = null;
     private $codigo=null;
+    private $estado = null; 
+
+    public function setEstado($value)
+    {
+        if ($this->validateNaturalNumber($value)) {
+            $this->estado = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function setId($value)
     {
@@ -277,6 +288,11 @@ class usuarioCliente extends Validator
     public function getOs()
     {
         return $this->os;
+    }
+
+    public function getEstado()
+    {
+        return $this->estado;
     }
     
     /*

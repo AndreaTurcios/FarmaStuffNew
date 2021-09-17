@@ -95,8 +95,32 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'Ingrese un valor para enviar dato';
                     }
                 break;
+                case 'logIn':
+                    $_POST = $usuarioCliente->validateForm($_POST);
+                    if ($usuarioCliente->checkUser($_POST['usuariocliente'])) {
+                        if ($usuarioCliente->checkPassword($_POST['clavecliente'])) {
+                            $_SESSION['idcliente'] = $usuarioCliente->getId();
+                            $_SESSION['usuariocliente'] = $usuarioCliente->getUsuarioCliente();
+                            $_SESSION['correocliente'] = $usuarioCliente->getCorreoCliente();
+                            $result['status'] = 1;
+                            $result['message'] = 'Autenticación correcta';
+                        } else {
+                            if (Database::getException()) {
+                                $result['exception'] = Database::getException();
+                            } else {
+                                $result['exception'] = 'Clave incorrecta';
+                            }
+                        }
+                    } else {
+                        if (Database::getException()) {
+                            $result['exception'] = Database::getException();
+                        } else {
+                            $result['exception'] = 'Alias incorrecto';
+                        }                                            
+                    }
+                    break;  
                 default:
-                    $result['exception'] = 'Acción no disponible dentro de la sesión';
+                    $result['exception'] = 'Acción no disponible dentro de la sesión f';
         }
 
     } else {
@@ -125,7 +149,23 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'Alias incorrecto';
                     }                                            
                 }
-                break;  
+                break;
+                case 'GuardarCodigoValidacion':
+                    $_POST = $usuarioCliente->validateForm($_POST);
+                        if ($usuarioCliente->setCodigoo($_POST['codigovalidar'])) {
+                            if ($usuarioCliente->setId( $_SESSION['idcliente'])) {                            
+                            if ($usuarioCliente->GuardarCodigoValidacion()) {
+                                $result['status'] = 1;                                    
+                            } else {
+                                $result['exception'] = Database::getException();                                                        
+                            }
+                        } else {
+                            $result['exception'] = 'Ingrese un valor para validar identidad';
+                        }    
+                    } else {
+                        $result['exception'] = 'Ingrese un valor para enviar codigo';
+                    }    
+                break; 
                 case 'readOneMails':                        
                     $_POST = $usuarioCliente->validateForm($_POST);
                     if ($_POST['correocliente'] != '') {
