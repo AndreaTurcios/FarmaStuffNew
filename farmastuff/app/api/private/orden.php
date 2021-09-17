@@ -6,7 +6,10 @@ require_once('../../models/Orden.php');
 if (isset($_GET['action'])){
     session_start();
     $orden=new orden;
-    $result = array ('status' => 0, 'message' =>null, 'exeception' => null); 
+    $result = array ('status' => 0, 'message' =>null, 'exeception' => null);
+    
+      if (isset($_SESSION['idempleado'])) {
+
         switch($_GET['action']){
 
             case 'readAll':
@@ -77,10 +80,18 @@ if (isset($_GET['action'])){
                         }
                         break;  
 
-                        }
-                        header('content-type: application/json; charset=utf-8');
-                        print(json_encode($result));
-                } else {
-                    print(json_encode('Recurso no disponible'));
-                }
+                        default:
+                
+                $result['exception'] = 'Acción no disponible dentro de la sesión';
+        }
+        // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
+        header('content-type: application/json; charset=utf-8');
+        // Se imprime el resultado en formato JSON y se retorna al controlador.
+        print(json_encode($result));
+    } else {
+        print(json_encode('Acceso denegado'));
+    }
+} else {
+    print(json_encode('Recurso no disponible'));
+}
             
