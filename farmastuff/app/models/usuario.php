@@ -21,6 +21,8 @@ class usuario extends Validator
     private $os = null;
     private $codigoos = null;
     private $codigo = null;
+    private $fechare = null;
+
 
     public function setId($value)
     {
@@ -185,6 +187,16 @@ class usuario extends Validator
             return false;
         }
     }
+    
+    public function setFechaRe($value)
+    {
+        if ($this->validateDate($value)) {
+            $this->fechare = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function getId()
     {
@@ -267,6 +279,10 @@ class usuario extends Validator
         return $this->correo;
     }
 
+        public function getFechaRe()
+    {
+        return $this->fechare;
+    }
 
     /*
     *   Métodos para gestionar la cuenta del usuario.
@@ -434,12 +450,14 @@ class usuario extends Validator
         $params = array($this->clave);
         return Database::getRow($sql, $params);
     }    
-
+    
+//Cambio nuevo
     public function updateCodigo()
     {   
+        $fechahoy = date('Y-m-d');
         $hash = password_hash($this->clave, PASSWORD_DEFAULT);
-        $sql = 'UPDATE empleado Set clave = ? Where correoempleado = (Select correodestinatario from codigorecuperacion Where idrecuperacion = (Select max(idrecuperacion) From codigorecuperacion ))';
-        $params = array($hash);
+        $sql = 'UPDATE empleado Set clave = ?, fecharegistro = ? Where correoempleado = (Select correodestinatario from codigorecuperacion Where idrecuperacion = (Select max(idrecuperacion) From codigorecuperacion ))';
+        $params = array($hash, $fechahoy);
         return Database::executeRow($sql, $params);
     }
 
@@ -456,6 +474,36 @@ class usuario extends Validator
         $params = array($this->codigoos);
         return Database::getRow($sql, $params);
     } 
-    
+        //Cambio nuevo
+    public function obtenerDiff()
+    {
+        $sql = 'SELECT fecharegistro from empleado where idempleado = ?';
+        $params = array($this->id);
+        $data = Database::getRow($sql, $params);
+        $fechaHoy = date('Y-m-d');
+        $dateDifference = abs(strtotime($fechaHoy) - strtotime($data['fecharegistro']));
+        $years  = floor($dateDifference / (365 * 60 * 60 * 24));
+        $months = floor(($dateDifference - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+        $days   = floor(($dateDifference - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 *24) / (60 * 60 * 24));
+
+        if($days>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    //Cambio nuevo
+    public function createRow()
+    {
+        $fechahoy = date('Y-m-d');
+        // Se encripta la clave por medio del algoritmo bcrypt que genera un string de 60 caracteres.
+        $hash = password_hash($this->clave, PASSWORD_DEFAULT);
+        $sql = 'INSERT INTO empleado (nombreempleado,apellidoempleado,telefonoempleado,direccionempleado,correoempleado,estadoempleado,usuario,clave,idtipoempleado,fecharegistro)
+                VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?,?)';
+        $params = array($this->nombreempleado, $this->apellidoempleado, $this->telefonoempleado,$this->direccionempleado,$this->correoempleado,$this->estadoempleado,$this->usuario, $hash,$this->idtipoempleado, $fechahoy);
+        return Database::executeRow($sql, $params);
+    }
 
 }
