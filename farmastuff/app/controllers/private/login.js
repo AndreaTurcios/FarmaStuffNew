@@ -77,24 +77,50 @@ document.getElementById('session-form').addEventListener('submit', function (eve
     document.getElementById("codigovalidar").value = validarc.value; 
     var codigo = document.getElementById("codigovalidar").value = validarc.value; 
     
-    fetch(API_LOGIN + 'logIn', {           
+ 
+  //CAMBIO NUEVO
+
+    fetch(API_LOGIN + 'tiempocontra', {
         method: 'post',
         body: new FormData(document.getElementById('session-form'))
+
     }).then(function (request) {
         // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
         if (request.ok) {
             request.json().then(function (response) {
-                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción
                 if (response.status) {
-                    confirmacion(codigo); 
-                    document.getElementById("codigovalidar").value = validarc.value;
-                    action = 'GuardarCodigoValidacion';
-                    saveRowValidador(API_LOGIN, action ,'session-form');
-                    action = 'historial';
-                    saveRowhistorial(API_LOGIN, action ,'session-form');                     
-                    sweetAlert(1, response.message, 'confirmacion.php');                    
+
+                    fetch(API_LOGIN + 'logIn', {
+                        method: 'post',
+                        body: new FormData(document.getElementById('session-form'))
+                    }).then(function (request) {
+                        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+                        if (request.ok) {
+                            request.json().then(function (response) {
+                                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                                if (response.status) {
+                                    confirmacion(codigo);
+                                    document.getElementById("codigovalidar").value = validarc.value;
+                                    action = 'GuardarCodigoValidacion';
+                                    saveRowValidador(API_LOGIN, action, 'session-form');
+                                    action = 'historial';
+                                    saveRowhistorial(API_LOGIN, action, 'session-form');
+                                    sweetAlert(1, response.message, 'confirmacion.php');
+                                } else {
+                                    sweetAlert(2, response.exception, null);
+                                }
+                            });
+                        } else {
+                            console.log(request.status + ' ' + request.statusText);
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+
                 } else {
-                    sweetAlert(2, response.exception, null);  
+                    sweetAlert(4, response.exception, 'restaurarcontraseña.php');
+
                 }
             });
         } else {
@@ -102,8 +128,11 @@ document.getElementById('session-form').addEventListener('submit', function (eve
         }
     }).catch(function (error) {
         console.log(error);
+
     });
+
 });
+
 /*
 function sessionTime() 
 {
