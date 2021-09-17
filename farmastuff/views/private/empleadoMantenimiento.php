@@ -20,11 +20,10 @@ Dashboard_Page::headerTemplate('Valoraciones');
 </div>
 
 <!-- Tabla para mostrar los registros existentes -->
-<table class="responsive-table highlight">
+<table class="responsive-table">
 <!-- Cabeza de la tabla para mostrar los títulos de las columnas -->
 <thead>
     <tr>
-      
     <th>#</th>    
     <th>Comentario </th>
     <th>Cliente </th>
