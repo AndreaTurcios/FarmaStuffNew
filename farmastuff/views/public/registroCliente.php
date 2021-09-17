@@ -3,14 +3,16 @@ include('../../app/helpers/public/plantillaHeaderLogin.php');
 //Se imprime la plantilla del encabezado y se envía el titulo para la página web
 Dashboard_Page::headerTemplate('Registro');
 ?>  
- <script src="https://www.google.com/recaptcha/api.js"></script>
 <link href="../../resources/css/login.css" type="text/css" rel="stylesheet" media="screen,projection" />
+<!--<script src="https://www.google.com/recaptcha/api.js"></script>-->
 <div class="container">
     <div class="row">
         <div class="card col s12 m8">
         <form method="post" id="save-form">
         <hr>Registro cliente</hr>
                     <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response"/>
+
                     <input class="hide" type="number" id="id_cliente" name="id_cliente"/>
                     <div class="row">
                         <div class="input-field col s12 m6">
@@ -25,17 +27,17 @@ Dashboard_Page::headerTemplate('Registro');
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">email</i>
-                            <input id="correo_clientes" type="email" name="correo_clientes" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
+                            <input id="correo_clientes" type="email" name="correo_clientes" class="validate" required/>
                             <label for="correo_clientes">Correo Cliente</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">phone</i>
-                            <input id="telefono_clientes" type="tel" name="telefono_clientes" class="validate" placeholder="0000-0000" pattern="[2,6,7]{1}[0-9]{3}[-][0-9]{4}" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
+                            <input id="telefono_clientes" type="tel" name="telefono_clientes" class="validate" placeholder="0000-0000" pattern="[2,6,7]{1}[0-9]{3}[-][0-9]{4}" required/>
                             <label for="telefono_clientes">Teléfono Cliente</label>
                         </div>                       
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">badge</i>
-                            <input id="dui_clientes" type="text" name="dui_clientes" class="validate" placeholder="00000000-0" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
+                            <input id="dui_clientes" type="text" name="dui_clientes" class="validate" placeholder="00000000-0" required/>
                             <label for="dui_clientes">Dui Cliente</label>
                         </div>
                         <div class="input-field col s12 m6">
@@ -45,7 +47,7 @@ Dashboard_Page::headerTemplate('Registro');
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">account_circle</i>                            
-                            <input id="usuario" type="text" name="usuario" class="validate" required oncopy="return false" oncut="return false" onpaste="return false" required autocomplete="off"/>
+                            <input id="usuario" type="text" name="usuario" class="validate" required/>
                             <label for="usuario">Usuario</label>
                         </div>
 

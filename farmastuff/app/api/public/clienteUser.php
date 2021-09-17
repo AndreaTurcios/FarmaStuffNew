@@ -86,11 +86,14 @@ if (isset($_GET['action'])) {
                                 $result['exception'] ='Apellido incorrecto';
                             }
                         }else {
-                            $result['exception'] ='Apellido incorrecto';
+                            $result['exception'] ='nombre incorrecto';
                         }
                     }else {
-                        $result['exception'] ='Apellido incorrecto';
+                        $result['recaptcha'] = 1;
+                        $result['exception'] = 'No eres un humano';
                     }
+                }else {
+                    $result['exception'] = 'Ocurrió un problema al cargar el reCAPTCHA';
                 }
             break;
             default:
@@ -104,4 +107,3 @@ if (isset($_GET['action'])) {
     } else {
         print(json_encode('Recurso no disponible'));
     }
-    
