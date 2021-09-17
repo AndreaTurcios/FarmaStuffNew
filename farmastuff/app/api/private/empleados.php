@@ -267,6 +267,7 @@ if (isset($_GET['action'])) {
                 break;     
                 
             case 'register':
+                
                 $_POST = $empleados->validateForm($_POST);
                 if ($empleados->setNombreEmpleado($_POST['nombreempleado'])) {
                     if ($empleados->setApellidoEmpleado($_POST['apellidoempleado'])) {

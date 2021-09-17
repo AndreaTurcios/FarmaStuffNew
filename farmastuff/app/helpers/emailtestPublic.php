@@ -6,10 +6,10 @@ Dashboard_Page::headerTemplate('Login');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require_once('../../libraries/phpmailer/src/Exception.php');
-require_once('../../libraries/phpmailer/src/PHPMailer.php');
-require_once('../../libraries/phpmailer/src/SMTP.php'); 
-require_once('../../libraries/phpmailer52/class.smtp.php'); 
+require_once('../../../libraries/phpmailer/src/Exception.php');
+require_once('../../../libraries/phpmailer/src/PHPMailer.php');
+require_once('../../../libraries/phpmailer/src/SMTP.php'); 
+require_once('../../../libraries/phpmailer52/class.smtp.php'); 
 
 $codigoos = $_POST['codigovalidar'];
 //Create an instance; passing `true` enables exceptions
