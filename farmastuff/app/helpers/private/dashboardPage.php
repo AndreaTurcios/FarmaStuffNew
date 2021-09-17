@@ -23,7 +23,22 @@ class Dashboard_Page {
             </head>
             
             <body>
-                <!--Encabezado del documento-->
+            ');
+
+            //Se obtiene el nombre del archivo de la página web actual.
+        $filename = basename($_SERVER['PHP_SELF']);
+        // Se comprueba si existe una sesión de administrador para mostrar el menú de opciones, de lo contrario se muestra un menú vacío.
+        if (isset($_SESSION['idempleado'])) {
+            // Se verifica si la página web actual es diferente a index.php (Iniciar sesión) y a register.php (Crear primer usuario) para no iniciar sesión otra vez, de lo contrario se direcciona a main.php
+            if ($filename != 'login.php' && $filename != 'register.php') {
+                // Se llama al método que contiene el código de las cajas de dialogo (modals).
+                //self::modals();
+                // Se imprime el código HTML para el encabezado del documento con el menú de opciones.
+
+
+                //Encabezado del documento
+
+                print('
                 <header>
                     <nav class="blue-grey darken-2">
                         <div class="nav-wrapper">
@@ -100,47 +115,92 @@ class Dashboard_Page {
                     </div>
     <script type="text/javascript" src="../../app/controllers/private/cambio.js"></script>
 </header>  
-</main>
+');
+
+} else {
+    header('location: index.php');
+}
+} else {
+// Se verifica si la página web actual es diferente a index.php (Iniciar sesión) y a register.php (Crear primer usuario) para direccionar a index.php, de lo contrario se muestra un menú vacío.
+if ($filename != 'login.php' && $filename != 'register.php') {
+    header('location: login.php');
+} else {
+    // Se imprime el código HTML para el encabezado del documento con un menú vacío cuando sea iniciar sesión o registrar el primer usuario.
+    print('
+        <header>
+            <!--NAVBAR-->
+            <nav class="black">
+                <div class="nav-wrapper container">
+                    <a href="login.php" class="brand-logo">FarmaStuff</a>
+                    <ul class="right hide-on-med-and-down">
+                        <!--<li><a href="badges.html"><i class="material-icons right">exit_to_app</i>Iniciar sesión</a></li>-->
+                    </ul>
+                </div>
+            </nav>
+            <!--NAVBAR-->
+        </header>
+        ');
+}
+}
+}
+
+//Método para imprimir
+
+public static function footerTemplate($controller)
+{
+    // Se comprueba si existe una sesión de administrador para imprimir el pie respectivo del documento.
+    if (isset($_SESSION['idempleado'])) {
+        $scripts = '
+        <!--Importación de archivos JavaScript al final del cuerpo para una carga optimizada-->
+        <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script> 
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="../../app/helpers/components.js"></script>                
+        <script type="text/javascript" src="../../resources/js/materialize.min.js"></script>              
+        <script src="../../resources/js/init.js"></script>   
+        <script type="text/javascript" src="../../app/controllers/private/account.js"></script>                                                          
+        <script type="text/javascript" src="../../app/controllers/private/' . $controller . '"></script>
+        ';
+    } else {
+        $scripts = '
+        <!--Importación de archivos JavaScript al final del cuerpo para una carga optimizada-->
+        <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script> 
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="../../app/helpers/components.js"></script>                
+        <script type="text/javascript" src="../../resources/js/materialize.min.js"></script>              
+        <script src="../../resources/js/init.js"></script>   
+        <script type="text/javascript" src="../../app/controllers/private/account.js"></script>                                                          
+        <script type="text/javascript" src="../../app/controllers/private/' . $controller . '"></script>
+        ';
+    }
+    print('
+ 
+            </body>
+            <footer class="page-footer blue-grey darken-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Farmastuff Administrativo</h5>                               
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Sitio Público</h5>
+                        <ul>
+                            <a href="../public/index.php" class="card-title center-align white-text">Ir</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2021 Copyright                            
+                </div>
+            </div>
+        </footer>
+                ' . $scripts . '
+        </body>
+
+        </html>
         ');
     }
-
-    //Método para imprimir el pie y establecer el controlador del documento
-    public static function footerTemplate($controller) {
-        print('
-               
-                <!--Pie del documento-->
-                <footer class="page-footer blue-grey darken-2">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col l6 s12">
-                                <h5 class="white-text">Farmastuff Administrativo</h5>                               
-                            </div>
-                            <div class="col l4 offset-l2 s12">
-                                <h5 class="white-text">Sitio Público</h5>
-                                <ul>
-                                    <a href="../public/index.php" class="card-title center-align white-text">Ir</a>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer-copyright">
-                        <div class="container">
-                            © 2021 Copyright                            
-                        </div>
-                    </div>
-                </footer>
-                <!--Importación de archivos JavaScript al final del cuerpo para una carga optimizada-->
-                <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script> 
-                <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-                <script type="text/javascript" src="../../app/helpers/components.js"></script>                
-                <script type="text/javascript" src="../../resources/js/materialize.min.js"></script>              
-                <script src="../../resources/js/init.js"></script>   
-                <script type="text/javascript" src="../../app/controllers/private/account.js"></script>                                                          
-                <script type="text/javascript" src="../../app/controllers/private/' . $controller . '"></script>
-            </body>
-            </html>
-        ');
-    }                                                      
 }
 /*  
                 if (isset($_SESSION['idtipoempleado'])){
