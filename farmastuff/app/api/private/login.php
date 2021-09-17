@@ -364,6 +364,35 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'Claves diferentes';
                     }
                     break;     
+              case 'tiempocontra':
+                $_POST = $usuario->validateForm($_POST);
+                if ($usuario->checkUser($_POST['usuario'])) {
+                    if ($usuario->getEstadoEmpleado() == false) {
+                        if ($usuario->checkPassword($_POST['clave'])) {
+                            if ($usuario->obtenerDiff()) {
+                                $result['exception'] = 'Debe cambiar su contraseña';
+                            } else {
+                                $result['status'] = 1;
+                                $result['message'] = 'Su contraseña es válida';
+                            }
+                        } else {
+                            if (Database::getException()) {
+                                $result['exception'] = Database::getException();
+                            } else {
+                                $result['exception'] = 'Clave incorrecta perraaaa';
+                            }
+                        }
+                    } else {
+                        $result['exception'] = 'Ya han pasado 90 días desde su cambio de contraseña, restaurela para poder ingresar ';
+                    }
+                } else {
+                    if (Database::getException()) {
+                        $result['exception'] = Database::getException();
+                    } else {
+                        $result['exception'] = 'Correo incorrecto';
+                    }
+                }
+                break;
                     default:
                     $result['exception'] = 'Acción no disponible fuera de la sesión'; 
         }
