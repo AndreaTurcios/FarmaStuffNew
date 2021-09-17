@@ -19,7 +19,7 @@ Dashboard_Page::headerTemplate('Confirmación');
                 <form id="confirmacion-form" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="c" class="form-label">Código de Verificación</label>
-                    <input type="text" class="form-control " placeholder="" aria-label="codigo" aria-describedby="basic-addon1" id="codigoos" type="text" name="codigoos" class="validate" required>                    
+                    <input type="text" class="form-control " placeholder="" aria-label="codigo" aria-describedby="basic-addon1" id="codigoos" type="text" name="codigoos" class="validate" onpaste="return true" required autocomplete="off">                    
                 </div>
                 <button type="submit" class="btn btn-primary">Verificar</button>
             </form>
