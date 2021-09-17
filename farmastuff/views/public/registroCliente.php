@@ -55,6 +55,11 @@ Dashboard_Page::headerTemplate('Registro');
                     <i class="material-icons prefix">security</i>
                     <input id="clave" type="password" name="clave" class="validate" required/>
                     <label for="clave">Clave</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <i class="material-icons prefix">security</i>
+                    <input id="clavef" type="password" name="clavef" class="validate" required/>
+                    <label for="clavef">Confirmar Contraseña</label>
                 </div>                           
                     </div>
                     <div class="row center-align">

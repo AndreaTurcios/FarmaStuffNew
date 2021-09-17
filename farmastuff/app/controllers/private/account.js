@@ -1,4 +1,5 @@
 const API = '../../app/api/private/login.php?action=';
+const API_LOGOUT = '../../app/api/private/login.php?action=logOut';
 
 //Métodos manejadores de eventos que se ejecutan cuando se realiza una acción
 document.addEventListener('click', sessionTime);
@@ -7,11 +8,12 @@ document.addEventListener('DOMContentLoaded', sessionTime);
 // Método manejador de eventos que se ejecuta cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', function () {
     inactivityTime(); 
+    sessionTime();
 });
 
 function sessionTime() 
 {
-        fetch(API + 'sessionTime', {
+        fetch(API_LOGOUT + 'sessionTime', {
             method: 'get'
         }).then(function (request) {
             // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.

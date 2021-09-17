@@ -56,16 +56,19 @@ if (isset($_GET['action'])) {
                                         if ($Clientes->setDireccion($_POST['direccion_clientes'])) {
                                             if ($Clientes->setTelefono($_POST['telefono_clientes'])) {
                                                 if ($Clientes->setUsuario($_POST['usuario'])) {  
-                                                    if ($Clientes->setClave($_POST['clave'])) {  
+                                                    if ($_POST['clave'] == $_POST['clavef']) {  
+                                                        if ($Clientes->setClave($_POST['clave'])) { 
                                                         if ($Clientes->createRow()) {
                                                                     $result['status'] = 1;
                                                                     $result['message'] = 'Empleado registrado exitosamente';                                                        
                                                         } else {
                                                                     $result['exception'] = Database::getException();                                                        
                                                         }  
-                                                    } else {
-                                                        $result['exception'] = $Clientes->getPasswordError();
-                                                        $result['exception'] = 'La clave tiene que ser mayor a 7 digitos';
+                                                        } else {
+                                                            $result['exception'] = $Clientes->getPasswordError();                                                            
+                                                        }                                                     
+                                                    } else {                                                        
+                                                        $result['exception'] = 'La claves distintas';
                                                     }
                                                 }else {
                                                 $result['exception'] ='Nombre de usuario incorrecto';
