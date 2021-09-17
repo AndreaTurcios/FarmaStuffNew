@@ -143,7 +143,7 @@ class usuarioCliente extends Validator
 
     public function setClave($value)
     {
-        if ($this->validateAlphanumeric($value, 1, 50)) {
+        if ($this->validatePassword($value, 1, 50)) {
             $this->clave = $value;
             return true;
         } else {
