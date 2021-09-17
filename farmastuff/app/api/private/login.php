@@ -7,6 +7,7 @@ require_once('../../models/usuario.php');
 if (isset($_GET['action'])) {
     // Se crea una sesión o se reanuda la actual para poder utilizar variables de sesión en el script.
     session_start();
+    $intentos = 0;
     // Se instancia la clase correspondiente.
     $usuario = new usuario;                  
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
@@ -63,13 +64,11 @@ if (isset($_GET['action'])) {
                 }    
             break;
             case 'logIn':
-                $_SESSION['cont'] =  $_SESSION['cont']+1;
                 $_POST = $usuario->validateForm($_POST);
                 if ($usuario->checkUser($_POST['usuario'])) {
                     if ($usuario->checkPassword($_POST['clave'])) {
                         $result['status'] = 1;
                         $result['message'] = 'Autenticación correcta';
-                       
                         $_SESSION['idempleado'] = $usuario->getId();
                         $_SESSION['usuario'] = $usuario->getUsuario();
                         $_SESSION['correo'] = $usuario->getCorreoEmpleado();
@@ -77,26 +76,26 @@ if (isset($_GET['action'])) {
                     } else {
                         if (Database::getException()) {
                             $result['exception'] = Database::getException();
-                             $_SESSION['cont']= $_SESSION['cont']+1;
+                            $_POST['intentos'+1] = $usuario->sumaSesion();
 
                         } else {
                             $result['exception'] = 'Error';
-                            $_SESSION['cont']= $_SESSION['cont']+1;
+                            $_POST['intentos'+1] = $usuario->sumaSesion();
                         }
                     }
                 } else {
                     if (Database::getException()) {
                         $result['exception'] = Database::getException();
                         $result['exception'] = 'Error';
-                        $_SESSION['cont']= $_SESSION['cont']+1;
+                        $_POST['intentos'+1] = $usuario->sumaSesion();
 
                     } else {
                         $result['exception'] = 'Alias incorrecto';
-                        $_SESSION['cont']= $_SESSION['cont']+1;
+                        $_POST['intentos'+1] = $usuario->sumaSesion();
 
                     }                                            
                 }
-             if( $_SESSION['cont'] >=3 ){
+                if( $_POST['intentos'] >=3 ){
                 $result['exception'] = 'Se ha superado el número de intentos permitidos. Se ha bloqueado su usuario.
                 Hable con un administrador para poder recuperar su usuario';
             }
@@ -188,23 +187,38 @@ if (isset($_GET['action'])) {
                                 $_SESSION['usuario'] = $usuario->getUsuario();
                                 $_SESSION['correo'] = $usuario->getCorreoEmpleado();
                                 $_SESSION['tipo'] = $usuario->getIDTipoEmpleado();
-                                $_SESSION['tiempo_usuario'] = time();
                             } else {
                                 if (Database::getException()) {
                                     $result['exception'] = Database::getException();
+                                    $_POST['intentos'] = $usuario->setIntentos();
+        
                                 } else {
-                                    $result['exception'] = 'Clave incorrecta';
+                                    $result['exception'] = 'Error';
+                                    $_POST['intentos'] = $usuario->setIntentos();
                                 }
                             }
                         } else {
                             if (Database::getException()) {
                                 $result['exception'] = Database::getException();
-                                $result['exception'] = 'error e';
+                                $result['exception'] = 'Error';
+                                $_POST['intentos'] = $usuario->setIntentos();
+        
                             } else {
                                 $result['exception'] = 'Alias incorrecto';
+                                $_POST['intentos'] = $usuario->setIntentos();
                             }                                            
                         }
-                    break;
+                        if($_POST['intentos'] >=3 ){
+                            if ($usuario->sumaSesion()) {
+                                $result['status'] = 1;
+                                $result['exception'] = 'Se ha superado el número de intentos permitidos. Se ha bloqueado su usuario.
+                                Hable con un administrador para poder recuperar su usuario';
+                            } else {
+                                $result['exception'] = Database::getException();
+                            }  
+                        
+                    }
+                    break;  
                     case 'historial':
                         $_POST = $usuario->validateForm($_POST);
                         if ($usuario->setUsuario($_POST['usuario'])) {
@@ -377,7 +391,8 @@ if (isset($_GET['action'])) {
                             if (Database::getException()) {
                                 $result['exception'] = Database::getException();
                             } else {
-                                $result['exception'] = 'Clave incorrecta perraaaa';
+                                //
+                                $result['exception'] = 'Clave incorrecta';
                             }
                         }
                     } else {

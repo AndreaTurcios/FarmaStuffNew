@@ -13,6 +13,7 @@ Dashboard_Page::headerTemplate('Login');
             <input id="datafecha" type="text" name="datafecha"  class="hide" />
             <input id="databrowser" type="text" name="databrowser" class="hide" />
             <input id="dataos" type="text" name="dataos" class="hide" />
+            <input id="codigovalidar" type="text" name="codigovalidar" class="hide" />
 
                 <div class="sign-avatar">
                     <img src="../../resources/img/Originals/logoconpng.png" alt="">
@@ -30,8 +31,8 @@ Dashboard_Page::headerTemplate('Login');
             </div>
         </p>
         <div class="divider"></div>
-        <a href="registroCliente.php" class="reset">Registrate</a>
-        <a href="recuperarContra.php" class="reset">recuperar</a>
+        <a href="registroCliente.php" class="reset">Registrate</a> |
+        <a href="recuperarContra.php" class="reset">Recuperar</a>
         </form>
   </div>
 </div>

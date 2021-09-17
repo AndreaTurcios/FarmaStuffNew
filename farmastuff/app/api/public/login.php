@@ -45,9 +45,60 @@ if (isset($_GET['action'])) {
                         $result['exception'] = 'usuario desconocido';
                     }       
                 break;
+                case 'changePassword':
+                    if ($usuarioCliente->setId($_SESSION['idcliente'])) {
+                        $_POST = $usuarioCliente->validateForm($_POST);
+                            if ($_POST['clave_nueva_1'] == $_POST['clave_nueva_2']) {
+                                if ($usuarioCliente->setClaveCliente($_POST['clave_nueva_1'])) {
+                                    if ($usuarioCliente->changePassword()) {
+                                        $result['status'] = 1;
+                                        $result['message'] = 'Contraseña cambiada correctamente';
+                                    } else {
+                                        $result['exception'] = Database::getException();
+                                    }
+                                } else {
+                                    $result['exception'] = $usuario->getPasswordError();
+                                }
+                            } else {
+                                $result['exception'] = 'Claves nuevas diferentes';
+                            }
+                       
+                    } else {
+                        $result['exception'] = 'Usuario incorrecto';
+                    }
+                    break;
+                case 'GuardarCodigoValidacion':
+                    $_POST = $usuarioCliente->validateForm($_POST);
+                        if ($usuarioCliente->setCodigoo($_POST['codigovalidar'])) {
+                            if ($usuarioCliente->setId( $_SESSION['idcliente'])) {                            
+                            if ($usuarioCliente->GuardarCodigoValidacion()) {
+                                $result['status'] = 1;                                    
+                            } else {
+                                $result['exception'] = Database::getException();                                                        
+                            }
+                        } else {
+                            $result['exception'] = 'Ingrese un valor para validar identidad';
+                        }    
+                    } else {
+                        $result['exception'] = 'Ingrese un valor para enviar codigo';
+                    }    
+                break;
+                case 'readCodigoSesiones':
+                    $_POST = $usuarioCliente->validateForm($_POST);
+                    if ($usuarioCliente->setCodigoo($_POST['codigoos'])) {                                                         
+                        if ($usuarioCliente->readCodigoSesiones()) {
+                            $result['status'] = 1;                                    
+                        } else {
+                            $result['exception'] = Database::getException();                                                        
+                        }
+                    } else {
+                        $result['exception'] = 'Ingrese un valor para enviar dato';
+                    }
+                break;
                 default:
                     $result['exception'] = 'Acción no disponible dentro de la sesión';
         }
+
     } else {
         // Se compara la acción a realizar cuando el cliente no ha iniciado sesión.
         switch ($_GET['action']) {

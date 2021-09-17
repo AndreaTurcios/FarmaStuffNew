@@ -20,6 +20,7 @@ class usuarioCliente extends Validator
     private $fecha = null;
     private $browser = null;
     private $os = null;
+    private $codigoos = null;
     private $codigo=null;
 
     public function setId($value)
@@ -91,6 +92,15 @@ class usuarioCliente extends Validator
         }
     }
 
+    public function setCodigoo($value)
+    {
+        if ($this->validateString($value,1,55)) {
+            $this->codigoos = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function setCorreoCliente($value)
     {
         if ($this->validateEmail($value, 1, 50)) {
@@ -372,6 +382,12 @@ class usuarioCliente extends Validator
         $params = array($this->codigo);
         return Database::getRow($sql, $params);
     }
+    public function readCodigoSesiones()
+    {
+        $sql = 'SELECT codigo From verificarsesionespublicas Where codigo = ?  And idvalidar = (Select Max(idvalidar) From verificarsesionespublicas )';
+        $params = array($this->codigoos);
+        return Database::getRow($sql, $params);
+    } 
     public function saveCodigo()
     {       
         $sql = 'INSERT into codigorecuperacionpublico (codigo, correodestinatario) values (? , ?)';
@@ -385,5 +401,12 @@ class usuarioCliente extends Validator
         $params = array($hash);
         return Database::executeRow($sql, $params);
     }
-
+    
+    public function GuardarCodigoValidacion()
+    {       
+        $sql = 'INSERT Into verificarsesionespublicas (codigo, idusuario) values ( ? , ? )';
+        $params = array($this->codigoos, $this->id);
+        return Database::executeRow($sql, $params);
+    }
+  
 }

@@ -22,12 +22,22 @@ class usuario extends Validator
     private $codigoos = null;
     private $codigo = null;
     private $fechare = null;
-
+    private $intentos = null;
 
     public function setId($value)
     {
         if ($this->validateNaturalNumber($value)) {
             $this->id = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function setIntentos($value)
+    {
+        if ($this->validateNaturalNumber($value)) {
+            $this->intentos = $value;
             return true;
         } else {
             return false;
@@ -213,6 +223,11 @@ class usuario extends Validator
         return $this->apellidoempleado;
     }
 
+    public function getIntentos()
+    {
+        return $this->intentos;
+    }
+
     public function getTelefonoEmpleado()
     {
         return $this->telefonoempleado;
@@ -287,7 +302,31 @@ class usuario extends Validator
     /*
     *   Métodos para gestionar la cuenta del usuario.
     */    
-    
+
+    public function sumaSesion()
+    {
+        $numIntentos = 'SELECT intentos FROM empleado WHERE idempleado = ?';
+        $params = array($this->intentos, $this->id);
+        $intentos = $numIntentos++; 
+        $sql = 'UPDATE empleado SET intentos = ? WHERE idempleado = ?';
+        $params = array($this->intentos, $this->id);
+        return Database::getRows($sql, $params);
+    }
+
+    public function selectSesion()
+    {
+        $sql = 'SELECT intentos FROM empleado WHERE idempleado = ?';
+        $params = array($this->intentos, $this->id);
+        return Database::getRows($sql, $params);
+    }
+
+    public function insertSesionFallida()
+    {
+        $sql = 'UPDATE empleado SET intentos = ? WHERE idempleado = ?';
+        $params = array($this->intentos, $this->id);
+        return Database::getRows($sql, $params);
+    }
+
     public function updateRow()
     { $hash = password_hash($this->clave, PASSWORD_DEFAULT);
         $sql = 'UPDATE empleado 

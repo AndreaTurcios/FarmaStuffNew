@@ -11,6 +11,7 @@ class Empleados extends Validator{
     private $clave = null;
     private $idtipoempleado = null;
     private $codigo = null;
+    
 
     /*
     public function generarCodigoRecu($longitudCodigo){
@@ -62,6 +63,8 @@ class Empleados extends Validator{
             return false;
         }
     }
+
+    
 
     public function setCodigo($value)
     {
@@ -214,6 +217,8 @@ class Empleados extends Validator{
     {
         return $this->idtipoempleado;
     }
+
+    
 
     public function getCodigo()
     {

@@ -4,7 +4,7 @@ class Public_Page {
     //Método para imprimir el encabezado y establecer el titulo del documento
     public static function headerTemplate($title) {
         session_start();
-        self::modals();
+       
 $filename = basename($_SERVER['PHP_SELF']);
 
 if (isset($_SESSION['idcliente'])) {
@@ -45,11 +45,10 @@ if (isset($_SESSION['idcliente'])) {
                         <li><a href="../../views/public/quienesSomos.php">Conócenos</a></li>
                         <li><a href="../../views/public/sucursales.php">Sucursales</a></li>
                        
-                        <li><div class="divider"></div></li>
-                        <li><a href="#" class="dropdown-trigger" data-target="dropdowns"><i class="material-icons left">verified_user</i>Cuenta: <b>' . $_SESSION['usuariocliente'] . '</b></a></li>
-                        </li> 
-                       <li><input type="hidden"  id="users" name="users" value="'. $_SESSION['usuariocliente'] .'"/> </li>
+                        <li><a href="#name"><span class="white-text name">Usuario: <b>' . $_SESSION['usuariocliente'] . '</b></span></a></li>                        
+                        <li><input type="hidden"  id="users" name="users" value="'. $_SESSION['usuariocliente'] .'"/> </li>
                         <a href="../../app/reports/private/pedidofinal.php? target="_blank" class="btn waves-effect pink tooltipped" data-tooltip="Orden Final"><i class="material-icons">assignment</i></a>   
+                        <li><a href="#" onclick="logOut()">Salir</a></li>
                     </ul>
     
                     <ul id="nav-mobile" class="sidenav">
@@ -64,10 +63,6 @@ if (isset($_SESSION['idcliente'])) {
                         <ul id="dropdown1" class="dropdown-content">
                             <li><a href="#!">Medicinal</a></li>
                             <li><a href="#!">Conveniencia</a></li>
-                        </ul>
-                        <ul id="dropdowns" class="dropdown-content">
-                         <li><a href="#" onclick="openPasswordDialog()"><i class="material-icons">lock</i>Cambiar clave</a></li>
-                          <li><a href="#" onclick="logOut()"><i class="material-icons">clear</i>Salir</a></li>
                         </ul>
                         <li>
                             <!-- Dropdown Trigger -->
@@ -114,45 +109,6 @@ if (isset($_SESSION['idcliente'])) {
                 </center>
             </div>
         </nav>
-<section class="slider">
-            <ul class="slides">
-                <li>
-                    <img src="../../resources/img/img1.jpg">
-                    <div class="caption center-align">
-                        <h1>La mejor farmacia</h3>
-                            <h5 class="light grey-text text-lighten-3">FarmaStuff es la página en línea de productos farmaceuticos más popular.</h5>
-                            <a href="#" class="btn btn-large white black-text waves-effect waves-grey">Más información</a>
-                    </div>
-                </li>
-                <li>
-                    <img src="../../resources/img/img3.png">
-                    <div class="caption left-align">
-                        <h3>Con millones de proovedores alrededor del mundo</h3>
-                        <h5 class="light grey-text text-lighten-3">FarmaStuff cuenta con proveedores extranjeros y a nivel nacional, por lo que se encuentra una variedad de productos extensa.</h5>
-                        <a href="#" class="btn btn-large white black-text waves-effect waves-grey">Más información</a>
-                    </div>
-                </li>
-                <li>
-                    <img src="../../resources/img/img2.png">
-                    <div class="caption right-align">
-                        <h3>Con una extensa variedad de productos</h3>
-                        <h5 class="light grey-text text-lighten-3">Más de 3 mil productos de millones de proveedores, ya sea internacionales, o nacionales.</h5>
-                        <a href="#" class="btn btn-large white black-text waves-effect waves-grey">Más información</a>
-                    </div>
-                </li>
-    
-            </ul>
-        </section>
-        <form method="post" id="search-form">
-        <div class="input-field col s6 m6">
-           <i class="material-icons prefix">search</i>
-           <input id="search" type="text" name="search" required/>
-           <label for="search">Buscador</label>
-        </div>
-           <div class="input-field col s6 m4">
-               <button type="submit" class="btn waves-effect green tooltipped" data-tooltip="Buscar"><i class="material-icons">check_circle</i></button>
-           </div>
-       </form>
 
         <main>
 
@@ -188,9 +144,6 @@ print('
                     <font color="#fff9c4" size="5" face="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg">FarmaStuff</font>
                     </a>
                 </a>
-
-                
-
                 <ul class="right hide-on-med-and-down">
                     <li><a href="../../views/public/quienesSomos.php">Conócenos</a></li>
                     <li><a href="../../views/public/sucursales.php">Sucursales</a></li>
@@ -227,75 +180,6 @@ print('
     <div class="navbarsecond">
     </div>
 
-    <nav class="red lighten-5" role="navigation">
-        <div class="nav-wrapper container nav">
-            <center>
-                <ul class="right hide-on-med-and-down">
-                    <!-- Dropdown Structure -->
-                    <ul id="dropdown1" class="dropdown-content">
-                        <li><a href="#!">Medicinal</a></li>
-                        <li><a href="#!">Conveniencia</a></li>
-                        <li class="divider"></li>
-                        <li><a href="../../views/public/ofertas.php">Ofertas</a></li>
-                    </ul>
-                    <li>
-                        <!-- Dropdown Trigger -->
-                        <li><a class="dropdown-trigger btn red lighten-2" href="#!" data-target="dropdown1">Categorías<i class="material-icons right">arrow_drop_down</i></a></li>
-                    </li>
-                    <li><a href="../../views/public/ofertas.php" style="color:black;">Ofertas</a></li>
-                    <li><a href="../../views/public/receta.php" style="color:black;">Compra con receta</a></li>
-                    <li><a href="../../views/public/recetaConSeguro.php" style="color:black;">Compra con seguro</a></li>
-                    <li><a href="carritoCompras.php" class="red lighten-2 waves-effect waves-light red btn btn-floating btn btn-danger "><i class="material-icons" style="font-style: unset;">add_shopping_cart</i></a></li>
-                </ul>
-                
-                <ul id="nav-mobile" class="sidenav">
-                    <li><a href="../../views/public/ofertas.php" style="color:black;">Ofertas</a></li>
-                    <li><a href="../../views/public/receta.php" style="color:black;">Compra con receta</a></li>
-                    <li><a href="../../views/public/recetaConSeguro.php" style="color:black;">Compra con seguro</a></li>
-                </ul>
-            </center>
-        </div>
-    </nav>
-<section class="slider">
-        <ul class="slides">
-            <li>
-                <img src="../../resources/img/img1.jpg">
-                <div class="caption center-align">
-                    <h1>La mejor farmacia</h3>
-                        <h5 class="light grey-text text-lighten-3">FarmaStuff es la página en línea de productos farmaceuticos más popular.</h5>
-                        <a href="#" class="btn btn-large white black-text waves-effect waves-grey">Más información</a>
-                </div>
-            </li>
-            <li>
-                <img src="../../resources/img/img3.png">
-                <div class="caption left-align">
-                    <h3>Con millones de proovedores alrededor del mundo</h3>
-                    <h5 class="light grey-text text-lighten-3">FarmaStuff cuenta con proveedores extranjeros y a nivel nacional, por lo que se encuentra una variedad de productos extensa.</h5>
-                    <a href="#" class="btn btn-large white black-text waves-effect waves-grey">Más información</a>
-                </div>
-            </li>
-            <li>
-                <img src="../../resources/img/img2.png">
-                <div class="caption right-align">
-                    <h3>Con una extensa variedad de productos</h3>
-                    <h5 class="light grey-text text-lighten-3">Más de 3 mil productos de millones de proveedores, ya sea internacionales, o nacionales.</h5>
-                    <a href="#" class="btn btn-large white black-text waves-effect waves-grey">Más información</a>
-                </div>
-            </li>
-
-        </ul>
-    </section>
-    <form method="post" id="search-form">
-    <div class="input-field col s6 m6">
-       <i class="material-icons prefix">search</i>
-       <input id="search" type="text" name="search" required/>
-       <label for="search">Buscador</label>
-    </div>
-       <div class="input-field col s6 m4">
-           <button type="submit" class="btn waves-effect green tooltipped" data-tooltip="Buscar"><i class="material-icons">check_circle</i></button>
-       </div>
-   </form>
-    <main>
 ');
         }
     }
@@ -305,8 +189,6 @@ print('
         print('
                 </main>
                 <!--Pie del documento-->
-                
-
                 <footer class="page-footer #e57373">
                 </div>
                     </div>
@@ -326,13 +208,6 @@ print('
                                     <div class="row pb-3">
                                         <div class="col-md-12">
                                             <br>
-                                            <center>
-                                            <div class="aside">
-                                                <a title="Facebook" href="https://es-la.facebook.com/"><img src="../../resources/img/facebook_icon-icons.com_53612.png" width="50" height="50"></a>
-                                                <a title="Instagram" href="https://www.instagram.com/Farma_Stuff"><img src="../../resources/img/Instagram_icon-icons.com_66804.png" width="50" height="50"></a>
-                                                <a title="Twitter" href="https://twitter.com/?lang=es"><img src="../../resources/img/5294-twitter-i_102511.png" width="50" height="50"></a>
-                                            </div>
-                                        </center>
                                         </div>
                                     </div>
                                 </div>
@@ -357,38 +232,5 @@ print('
             </html>
         ');
     }
-    private static function modals()
-    {
-        // Se imprime el código HTML de las cajas de dialogo (modals).
-        print('
-           
-            <div id="password-modal" class="modal">
-                <div class="modal-content">
-                    <h4 class="center-align">Cambiar contraseña</h4>
-                    <form method="post" id="password-form">
-                        <div class="row center-align">
-                            <label>CLAVE NUEVA</label>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12 m6">
-                                <i class="material-icons prefix">security</i>
-                                <input id="clave_nueva_1" type="password" name="clave_nueva_1" class="validate" required/>
-                                <label for="clave_nueva_1">Clave</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <i class="material-icons prefix">security</i>
-                                <input id="clave_nueva_2" type="password" name="clave_nueva_2" class="validate" required/>
-                                <label for="clave_nueva_2">Confirmar clave</label>
-                            </div>
-                        </div>
-                        <div class="row center-align">
-                            <a href="#" class="btn waves-effect grey tooltipped modal-close" data-tooltip="Cancelar"><i class="material-icons">cancel</i></a>
-                            <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Guardar"><i class="material-icons">save</i></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        ');
-}  
 }
 ?>

@@ -1,6 +1,37 @@
 // Constante para establecer la ruta y parámetros de comunicación con la API.
 const API_LOGIN = '../../app/api/public/login.php?action=';
 
+document.addEventListener('DOMContentLoaded', function () {
+    // Se inicializa el componente Tooltip asignado al botón del formulario para que funcione la sugerencia textual.
+    document.getElementById("codigovalidar").value = validarc.value;
+    M.Tooltip.init(document.querySelectorAll('.tooltipped'));
+
+    // Petición para verificar si existen usuarios.
+    fetch(API_LOGIN + 'readAll', {
+        method: 'get'
+    }).then(function (request) {
+        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+        if (request.ok) {
+            request.json().then(function (response) {
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción
+                if (response.status) {
+                    sweetAlert(4, 'Debe autenticarse para ingresar', null);
+                } else {
+                    // Se verifica si ocurrió un problema en la base de datos, de lo contrario se continua normalmente.
+                    if (response.error) {
+                    } else {
+                       
+                    }
+                }
+            });
+        } else {
+            console.log(request.status + ' ' + request.statusText);
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+});
+
 
 // Método manejador de eventos que se ejecuta cuando se envía el formulario de iniciar sesión.
 document.getElementById('session-form').addEventListener('submit', function (event) {
@@ -18,7 +49,8 @@ document.getElementById('session-form').addEventListener('submit', function (eve
             request.json().then(function (response) {
                 // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {
-                    sweetAlert(1, response.message, 'index.php');
+                    
+                    sweetAlert(1, response.message, 'confirmacion.php');
                     action = 'historial';
                     saveRowhistorial(API_LOGIN, action ,'session-form');
                 } else {
@@ -95,11 +127,11 @@ function searchRowsCodigo(api, form) {
     });
 }
 
-function confirmacion(correo, codigo) {
+function confirmacion(codigo) {
     // Se restauran los elementos del formulario.
-    document.getElementById('mail-form').reset();
-    const data = new FormData();
-    data.append('correo_empleados', correo);
+    document.getElementById('session-form').reset();
+    const data = new FormData();    
+    data.append('codigovalidar', codigo );
 fetch(API_CORREO, {     
     method: 'post',
     body: data
@@ -108,7 +140,8 @@ fetch(API_CORREO, {
     if (request.ok) {
         request.json().then(function (response) {
             // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción
-            if (response.status) {                   
+            if (response.status) {
+                document.getElementById("datavalidarc").value = validarc.value;
                 sweetAlert(1, response.message, null);
             } else {
                 // En caso contrario nos envia este mensaje
@@ -124,32 +157,6 @@ fetch(API_CORREO, {
 
 }
 
+ 
 
-function confirmacion(correo, codigoos) {
-    // Se restauran los elementos del formulario.
-    document.getElementById('confirmacion-form').reset();
-    const data = new FormData();
-    data.append('correo_empleados', correo);
-fetch(API_CORREO, {     
-    method: 'post',
-    body: data
-}).then(function (request) {
-    // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
-    if (request.ok) {
-        request.json().then(function (response) {
-            // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción
-            if (response.status) {                   
-                sweetAlert(1, response.message, null);
-            } else {
-                // En caso contrario nos envia este mensaje
-                sweetAlert(2, response.exception, null);
-            }
-        });
-    } else {
-        console.log(request.status + ' ' + request.statusText);
-    }
-}).catch(function (error) {
-    console.log(error);
-});
 
-}
