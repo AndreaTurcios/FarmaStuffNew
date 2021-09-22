@@ -414,7 +414,7 @@ if (isset($_GET['action'])) {
                             if (Database::getException()) {
                                 $result['exception'] = Database::getException();
                             } else {
-                                $result['exception'] = 'Clave incorrecta perraaaa';
+                                $result['exception'] = 'Clave incorrecta';
                             }
                         }
                     } else {
