@@ -68,7 +68,18 @@ Dashboard_Page::headerTemplate('Registro');
                     </label>
                     <div class="row center-align">
                         <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Guardar"><i class="material-icons">save</i></button>
-                    </div>           
+                    </div>         
+                    
+                    <div id="terminos" class="modal">
+                    <div class="modal-content">
+                        <h4 class="center-align">Términos y condiciones</h4>
+                        <p>FarmaStuff, , con el fin de aportar valor agregado en la sociedad Salvadoreña, con el firme compromiso de garantizar accesibilidad, eficiencia, disponibilidad, calidad, seguridad y cobertura en la demanda de medicamentos y productos cosméticos del país, siendo un medio necesario para que prevalezca la salud dentro de la población y cumpliendo con el uso racional de los mismos, pone a disposición un canal digital para que el cliente pueda tener mayor facilidad para solicitar y surtir sus medicamentos y/o productos de conveniencia, todo esto cumpliendo los reglamentos y normas establecidas para la responsable dispensación de medicamentos. Farmacia San Nicolás realizará la verificación de las recetas elaboradas por los profesionales autorizados y se reserva el derecho de poder negar despachos de medicinas que no estén acorde a lo autorizado por la DNM y a realizar devoluciones a nuestros clientes cuando sus recetas no coincidan con lo que dicte la ley vigente. El cliente tendrá acceso a la validación y verificación de las mismas a través de nuestro chat en línea antes de ejecutar la solicitud de su pedido, la receta será verificada por un dependiente de farmacia capacitado para la correcta orientación del paciente en la concentración, forma farmacéutica y cantidad especificada en su receta, sin modificar el principio activo prescrito.</p>
+                    </div>
+                    <div class="divider"></div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close btn waves-effect"><i class="material-icons">done</i></a>
+                        </div>
+                    </div>
                 </form>
        </div>
     </div>
