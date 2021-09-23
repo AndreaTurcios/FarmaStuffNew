@@ -62,6 +62,10 @@ Dashboard_Page::headerTemplate('Registro');
                     <label for="clavef">Confirmar Contraseña</label>
                 </div>                           
                     </div>
+                    <label class="center-align col s12">
+                        <input type="checkbox" id="condicion" name="condicion" required/>
+                            <span>Acepto <a href="#terminos" class="modal-trigger">términos y condiciones</a></span>
+                    </label>
                     <div class="row center-align">
                         <button type="submit" class="btn waves-effect blue tooltipped" data-tooltip="Guardar"><i class="material-icons">save</i></button>
                     </div>           
