@@ -12,8 +12,6 @@ function openPasswordDialog() {
 
 const API_LOGINN = '../../app/api/private/login.php?action=';
 
-
-
 function changePassword(id) {
     // Se restauran los elementos del formulario.
     document.getElementById('change-form').reset();
@@ -24,7 +22,6 @@ function changePassword(id) {
 
 document.getElementById('change-form').addEventListener('submit', function (event) {
     event.preventDefault();
-    
     fetch(API_LOGINN + 'changePassword', {
         method: 'post',
         body: new FormData(document.getElementById('change-form'))
